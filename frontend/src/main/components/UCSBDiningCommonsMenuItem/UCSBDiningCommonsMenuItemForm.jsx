@@ -49,14 +49,16 @@ function UCSBDiningCommonsMenuItemForm({
 
         <Col>
           <Form.Group className="mb-3">
-            <Form.Label htmlFor="diningCommonsCode">Dining Commons Code</Form.Label>
+            <Form.Label htmlFor="diningCommonsCode">
+              Dining Commons Code
+            </Form.Label>
             <Form.Control
               data-testid="UCSBDiningCommonsMenuItemForm-diningCommonsCode"
               id="diningCommonsCode"
               type="text"
               isInvalid={Boolean(errors.diningCommonsCode)}
               {...register("diningCommonsCode", {
-                required: "DiningCommonsCode is required.",
+                required: "Dining Commons Code is required.",
               })}
             />
             <Form.Control.Feedback type="invalid">
@@ -74,6 +76,10 @@ function UCSBDiningCommonsMenuItemForm({
               isInvalid={Boolean(errors.name)}
               {...register("name", {
                 required: "Name is required.",
+                maxLength: {
+                  value: 30,
+                  message: "Max length 30 characters",
+                },
               })}
             />
             <Form.Control.Feedback type="invalid">
@@ -105,7 +111,10 @@ function UCSBDiningCommonsMenuItemForm({
 
       <Row>
         <Col>
-          <Button type="submit" data-testid="UCSBDiningCommonsMenuItemForm-submit">
+          <Button
+            type="submit"
+            data-testid="UCSBDiningCommonsMenuItemForm-submit"
+          >
             {buttonLabel}
           </Button>
           <Button
