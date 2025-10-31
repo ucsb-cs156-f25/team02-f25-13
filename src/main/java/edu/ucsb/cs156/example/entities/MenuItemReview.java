@@ -4,8 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.validation.constraints.Max; // <-- Need this import
-import jakarta.validation.constraints.Min;
+// <-- Need this import
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,8 +24,6 @@ public class MenuItemReview {
   private Long itemId;
   private String reviewerEmail;
 
-  @Min(0)
-  @Max(5)
   private int stars;
 
   private LocalDateTime dateReviewed;

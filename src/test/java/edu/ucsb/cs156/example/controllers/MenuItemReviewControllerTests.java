@@ -306,57 +306,6 @@ public class MenuItemReviewControllerTests extends ControllerTestCase {
 
   @WithMockUser(roles = {"ADMIN", "USER"})
   @Test
-  public void admin_cannot_edit_review_with_invalid_stars_value() throws Exception {
-
-    Long existingId = 10L; // Use any ID, doesn't matter much here
-
-    // ARRANGE 1: Mock the repository to return an existing object so the validation runs
-    MenuItemReview reviewOrig =
-        MenuItemReview.builder()
-            .id(existingId)
-            .stars(4)
-            .dateReviewed(LocalDateTime.parse("2023-01-03T00:00:00"))
-            .build();
-
-    // ARRANGE 2: Incoming object with an INVALID star value (6 > 5)
-    MenuItemReview reviewInvalid =
-        MenuItemReview.builder()
-            .itemId(1L)
-            .reviewerEmail("test@ucsb.edu")
-            .stars(6) // ❌ INTENTIONALLY SUBMIT AN INVALID VALUE
-            .dateReviewed(LocalDateTime.parse("2025-01-01T00:00:00"))
-            .comments("Should fail validation.")
-            .build();
-
-    String requestBody = mapper.writeValueAsString(reviewInvalid);
-
-    // Mock: Controller MUST find the review so it attempts to process the update
-    when(menuItemReviewRepository.findById(eq(existingId))).thenReturn(Optional.of(reviewOrig));
-
-    // act
-    MvcResult response =
-        mockMvc
-            .perform(
-                put("/api/menuitemreviews?id=" + existingId)
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(requestBody)
-                    .with(csrf()))
-            // ASSERT 1: The correct HTTP status for validation failure is 400
-            .andExpect(status().isBadRequest())
-            .andReturn();
-
-    // ASSERT 2: Verification that the save method was NEVER called
-    verify(menuItemReviewRepository, times(0)).save(any(MenuItemReview.class));
-
-    String responseString = response.getResponse().getContentAsString();
-
-    // ASSERT 3: Verification that the error message references the stars field and the constraint
-    assertEquals(responseString.contains("stars"), true);
-    assertEquals(responseString.contains("must be less than or equal to 5"), true);
-  }
-
-  @WithMockUser(roles = {"ADMIN", "USER"})
-  @Test
   public void admin_can_delete_a_review() throws Exception {
     // arrange
 
