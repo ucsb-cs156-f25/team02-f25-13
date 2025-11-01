@@ -62,29 +62,31 @@ function MenuItemReviewForm({
           isInvalid={Boolean(errors.reviewerEmail)}
           {...register("reviewerEmail", {
             required: "Reviewer email is required.",
-            pattern: { // Added email validation for robustness
+            maxLength: { value: 255, message: "Max length 255 characters" },
+            pattern: {
+              // Added email validation for robustness
               value: /^\S+@\S+$/i,
-              message: "Must be a valid email address."
-            }
+              message: "Must be a valid email address.",
+            },
           })}
         />
         <Form.Control.Feedback type="invalid">
           {errors.reviewerEmail?.message}
         </Form.Control.Feedback>
       </Form.Group>
-      
+
       {/* FIELD: stars */}
       <Form.Group className="mb-3">
         <Form.Label htmlFor="stars">Stars (0-5)</Form.Label>
         <Form.Control
           data-testid={testIdPrefix + "-stars"}
           id="stars"
-          type="number" // Use type number for cleaner input
+          type="number"
           isInvalid={Boolean(errors.stars)}
           {...register("stars", {
             required: "Stars is required.",
             min: { value: 0, message: "Minimum is 0" },
-            max: { value: 5, message: "Maximum is 5" }
+            max: { value: 5, message: "Maximum is 5" },
           })}
         />
         <Form.Control.Feedback type="invalid">
@@ -94,7 +96,9 @@ function MenuItemReviewForm({
 
       {/* FIELD: dateReviewed */}
       <Form.Group className="mb-3">
-        <Form.Label htmlFor="dateReviewed">Date Reviewed (iso format)</Form.Label>
+        <Form.Label htmlFor="dateReviewed">
+          Date Reviewed (iso format)
+        </Form.Label>
         <Form.Control
           data-testid={testIdPrefix + "-dateReviewed"}
           id="dateReviewed"
@@ -108,7 +112,7 @@ function MenuItemReviewForm({
           {errors.dateReviewed?.message}
         </Form.Control.Feedback>
       </Form.Group>
-      
+
       {/* FIELD: comments */}
       <Form.Group className="mb-3">
         <Form.Label htmlFor="comments">Comments</Form.Label>
@@ -125,7 +129,6 @@ function MenuItemReviewForm({
           {errors.comments?.message}
         </Form.Control.Feedback>
       </Form.Group>
-
 
       <Button type="submit" data-testid={testIdPrefix + "-submit"}>
         {buttonLabel}
