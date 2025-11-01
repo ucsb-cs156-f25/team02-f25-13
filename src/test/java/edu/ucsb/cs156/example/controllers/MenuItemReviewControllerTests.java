@@ -70,6 +70,54 @@ public class MenuItemReviewControllerTests extends ControllerTestCase {
         .andExpect(status().is(403)); // only admins can post
   }
 
+  @WithMockUser(roles = {"ADMIN", "USER"})
+  @Test
+  public void an_admin_user_can_post_a_new_menuitemreview_with_star_1() throws Exception {
+    // arrange
+    LocalDateTime date = LocalDateTime.now();
+
+    // act
+    MvcResult response =
+        mockMvc
+            .perform(
+                post("/api/menuitemreviews/post")
+                    .param("itemId", "1")
+                    .param("reviewerEmail", "test@example.com")
+                    .param("stars", "1")
+                    .param("comments", "Edge case test")
+                    .param("dateReviewed", date.toString())
+                    .with(csrf()))
+            .andExpect(status().isOk())
+            .andReturn();
+
+    // assert
+    verify(menuItemReviewRepository, times(1)).save(any(MenuItemReview.class));
+  }
+
+  @WithMockUser(roles = {"ADMIN", "USER"})
+  @Test
+  public void an_admin_user_can_post_a_new_menuitemreview_with_star_5() throws Exception {
+    // arrange
+    LocalDateTime date = LocalDateTime.now();
+
+    // act
+    MvcResult response =
+        mockMvc
+            .perform(
+                post("/api/menuitemreviews/post")
+                    .param("itemId", "1")
+                    .param("reviewerEmail", "test@example.com")
+                    .param("stars", "5")
+                    .param("comments", "Edge case test")
+                    .param("dateReviewed", date.toString())
+                    .with(csrf()))
+            .andExpect(status().isOk())
+            .andReturn();
+
+    // assert
+    verify(menuItemReviewRepository, times(1)).save(any(MenuItemReview.class));
+  }
+
   @WithMockUser(roles = {"USER"})
   @Test
   public void logged_in_user_can_get_all_menuitemreviews() throws Exception {
