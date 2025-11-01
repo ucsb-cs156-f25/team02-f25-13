@@ -64,6 +64,9 @@ public class MenuItemReviewController extends ApiController {
           @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
           LocalDateTime dateReviewed)
       throws JsonProcessingException {
+    if (stars < 1 || stars > 5) {
+      throw new IllegalArgumentException("Stars must be between 1 and 5");
+    }
 
     // For an explanation of @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     // See: https://www.baeldung.com/spring-date-parameters
