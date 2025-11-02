@@ -17,6 +17,11 @@ function HelpRequestForm({
 
   const navigate = useNavigate();
 
+  // Stryker disable Regex
+  const isodate_regex =
+    /(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+)|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d)|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d)/i;
+  // Stryker restore Regex
+
   const testIdPrefix = "HelpRequestForm";
 
   return (
@@ -68,6 +73,71 @@ function HelpRequestForm({
         />
         <Form.Control.Feedback type="invalid">
           {errors.teamid?.message}
+        </Form.Control.Feedback>
+      </Form.Group>
+
+      <Form.Group className="mb-3">
+        <Form.Label htmlFor="tableOrBreakoutRoom">TableOrBreakoutRoom</Form.Label>
+        <Form.Control
+          data-testid={testIdPrefix + "-tableOrBreakoutRoom"}
+          id="tableOrBreakoutRoom"
+          type="text"
+          isInvalid={Boolean(errors.tableOrBreakoutRoom)}
+          {...register("tableOrBreakoutRoom", {
+            required: "TableOrBreakoutRoom is required.",
+          })}
+        />
+        <Form.Control.Feedback type="invalid">
+          {errors.tableOrBreakoutRoom?.message}
+        </Form.Control.Feedback>
+      </Form.Group>
+
+      <Form.Group className="mb-3">
+        <Form.Label htmlFor="requestTime">Date (iso format)</Form.Label>
+        <Form.Control
+          data-testid="UCSBDateForm-requestTime"
+          id="requestTime"
+          type="datetime-local"
+          isInvalid={Boolean(errors.requestTime)}
+          {...register("requestTime", {
+            required: true,
+            pattern: isodate_regex,
+          })}
+        />
+        <Form.Control.Feedback type="invalid">
+          {errors.requestTime && "RequestTime is required. "}
+        </Form.Control.Feedback>
+      </Form.Group>
+
+      <Form.Group className="mb-3">
+        <Form.Label htmlFor="explanation">Explanation</Form.Label>
+        <Form.Control
+          data-testid={testIdPrefix + "-explanation"}
+          id="explanation"
+          type="text"
+          isInvalid={Boolean(errors.explanation)}
+          {...register("explanation", {
+            required: "TableOrBreakoutRoom is required.",
+          })}
+        />
+        <Form.Control.Feedback type="invalid">
+          {errors.explanation?.message}
+        </Form.Control.Feedback>
+      </Form.Group>
+
+      <Form.Group className="mb-3">
+        <Form.Label htmlFor="solved">Solved</Form.Label>
+        <Form.Control
+          data-testid={testIdPrefix + "-solved"}
+          id="solved"
+          type="boolean"
+          isInvalid={Boolean(errors.solved)}
+          {...register("solved", {
+            required: "TableOrBreakoutRoom is required.",
+          })}
+        />
+        <Form.Control.Feedback type="invalid">
+          {errors.solved?.message}
         </Form.Control.Feedback>
       </Form.Group>
 
