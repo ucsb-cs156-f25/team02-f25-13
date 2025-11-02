@@ -117,7 +117,7 @@ function HelpRequestForm({
           type="text"
           isInvalid={Boolean(errors.explanation)}
           {...register("explanation", {
-            required: "TableOrBreakoutRoom is required.",
+            required: "Explanation is required.",
           })}
         />
         <Form.Control.Feedback type="invalid">
@@ -126,19 +126,26 @@ function HelpRequestForm({
       </Form.Group>
 
       <Form.Group className="mb-3">
-        <Form.Label htmlFor="solved">Solved</Form.Label>
-        <Form.Control
-          data-testid={testIdPrefix + "-solved"}
-          id="solved"
-          type="boolean"
-          isInvalid={Boolean(errors.solved)}
-          {...register("solved", {
-            required: "TableOrBreakoutRoom is required.",
-          })}
+        <Form.Label>Solved</Form.Label>
+
+        <Form.Check
+          type="radio"
+          id="solved-yes"
+          label="Yes"
+          value="true"
+          {...register("solved", { required: "Please choose Yes or No." })}
         />
-        <Form.Control.Feedback type="invalid">
-          {errors.solved?.message}
-        </Form.Control.Feedback>
+        <Form.Check
+          type="radio"
+          id="solved-no"
+          label="No"
+          value="false"
+          {...register("solved", { required: "Please choose Yes or No." })}
+        />
+
+        {errors.solved && (
+          <div className="invalid-feedback d-block">{errors.solved.message}</div>
+        )}
       </Form.Group>
 
       <Button type="submit" data-testid={testIdPrefix + "-submit"}>
