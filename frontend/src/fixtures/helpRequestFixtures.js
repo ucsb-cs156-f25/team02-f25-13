@@ -6,7 +6,7 @@ const helpRequestFixtures = {
     tableOrBreakoutRoom: "12",
     requestTime: "2005-06-16T23:55:39",
     explanation: "I need help with team01!!!",
-    solved: true
+    solved: true,
   },
   threeHelpRequests: [
     {
@@ -16,7 +16,7 @@ const helpRequestFixtures = {
       tableOrBreakoutRoom: "2",
       requestTime: "2013-06-16T23:55:39",
       explanation: "Mvn clean install is not working!!!",
-      solved: true
+      solved: true,
     },
     {
       id: 3,
@@ -25,7 +25,7 @@ const helpRequestFixtures = {
       tableOrBreakoutRoom: "5",
       requestTime: "2005-06-14T23:55:39",
       explanation: "Help me please!!!",
-      solved: false
+      solved: false,
     },
     {
       id: 4,
@@ -34,7 +34,7 @@ const helpRequestFixtures = {
       tableOrBreakoutRoom: "7",
       requestTime: "2023-06-15T23:55:39",
       explanation: "I have a question about the project!!!",
-      solved: true
+      solved: true,
     },
   ],
 };
