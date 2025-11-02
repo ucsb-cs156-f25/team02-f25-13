@@ -79,7 +79,7 @@ function UCSBOrganizationForm({
 
       <Form.Group className="mb-3">
         <Form.Label htmlFor="orgTranslation">
-          Organization Translation{" "}
+          Organization Translation
         </Form.Label>
         <Form.Control
           data-testid={testIdPrefix + "-orgTranslation"}
