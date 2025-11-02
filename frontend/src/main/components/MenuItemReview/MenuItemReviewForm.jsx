@@ -12,7 +12,7 @@ function MenuItemReviewForm({
     register,
     formState: { errors },
     handleSubmit,
-  } = useForm({ defaultValues: initialContents || {} });
+  } = useForm({ defaultValues: initialContents || {}, mode: "onChange", });
   // Stryker restore all
 
   const navigate = useNavigate();
@@ -64,8 +64,7 @@ function MenuItemReviewForm({
             required: "Reviewer email is required.",
             maxLength: { value: 255, message: "Max length 255 characters" },
             pattern: {
-              // Added email validation for robustness
-              value: /^\S+@\S+$/i,
+              value: /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,4}$/,
               message: "Must be a valid email address.",
             },
           })}
