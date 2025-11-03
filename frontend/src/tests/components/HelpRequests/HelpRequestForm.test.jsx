@@ -5,7 +5,6 @@ import HelpRequestForm from "main/components/HelpRequests/HelpRequestForm";
 import { helpRequestFixtures } from "fixtures/helpRequestFixtures";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import HelpRequestForm from "main/components/HelpRequests/HelpRequestForm";
 
 const mockedNavigate = vi.fn();
 vi.mock("react-router", async () => {
