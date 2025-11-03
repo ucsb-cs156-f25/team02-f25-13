@@ -1,7 +1,7 @@
 import { Button, Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
-export const validateSolved = (value) =>
+const validateSolved = (value) =>
   value === "true" || value === "false" || "Value must be 'true' or 'false'";
 function HelpRequestForm({
   initialContents,
