@@ -63,21 +63,23 @@ function HelpRequestForm({
       <Form.Group className="mb-3">
         <Form.Label htmlFor="teamId">TeamId</Form.Label>
         <Form.Control
-          data-testid={testIdPrefix + "-teamid"}
-          id="teamid"
+          data-testid={testIdPrefix + "-teamId"}
+          id="teamId"
           type="text"
-          isInvalid={Boolean(errors.teamid)}
-          {...register("teamid", {
+          isInvalid={Boolean(errors.teamId)}
+          {...register("teamId", {
             required: "TeamId is required.",
           })}
         />
         <Form.Control.Feedback type="invalid">
-          {errors.teamid?.message}
+          {errors.teamId?.message}
         </Form.Control.Feedback>
       </Form.Group>
 
       <Form.Group className="mb-3">
-        <Form.Label htmlFor="tableOrBreakoutRoom">TableOrBreakoutRoom</Form.Label>
+        <Form.Label htmlFor="tableOrBreakoutRoom">
+          TableOrBreakoutRoom
+        </Form.Label>
         <Form.Control
           data-testid={testIdPrefix + "-tableOrBreakoutRoom"}
           id="tableOrBreakoutRoom"
@@ -93,7 +95,7 @@ function HelpRequestForm({
       </Form.Group>
 
       <Form.Group className="mb-3">
-        <Form.Label htmlFor="requestTime">Date (iso format)</Form.Label>
+        <Form.Label htmlFor="requestTime">RequestTime</Form.Label>
         <Form.Control
           data-testid="UCSBDateForm-requestTime"
           id="requestTime"
@@ -144,7 +146,9 @@ function HelpRequestForm({
         />
 
         {errors.solved && (
-          <div className="invalid-feedback d-block">{errors.solved.message}</div>
+          <div className="invalid-feedback d-block">
+            {errors.solved.message}
+          </div>
         )}
       </Form.Group>
 
