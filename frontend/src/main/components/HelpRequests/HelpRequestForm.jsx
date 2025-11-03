@@ -1,7 +1,8 @@
 import { Button, Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
-
+export const validateSolved = (value) =>
+  value === "true" || value === "false" || "Value must be 'true' or 'false'";
 function HelpRequestForm({
   initialContents,
   submitAction,
@@ -63,7 +64,7 @@ function HelpRequestForm({
       <Form.Group className="mb-3">
         <Form.Label htmlFor="teamId">TeamId</Form.Label>
         <Form.Control
-          data-testid={testIdPrefix + "-teamId"}
+
           id="teamId"
           type="text"
           isInvalid={Boolean(errors.teamId)}
@@ -81,7 +82,7 @@ function HelpRequestForm({
           TableOrBreakoutRoom
         </Form.Label>
         <Form.Control
-          data-testid={testIdPrefix + "-tableOrBreakoutRoom"}
+
           id="tableOrBreakoutRoom"
           type="text"
           isInvalid={Boolean(errors.tableOrBreakoutRoom)}
@@ -97,7 +98,7 @@ function HelpRequestForm({
       <Form.Group className="mb-3">
         <Form.Label htmlFor="requestTime">RequestTime</Form.Label>
         <Form.Control
-          data-testid="UCSBDateForm-requestTime"
+
           id="requestTime"
           type="datetime-local"
           isInvalid={Boolean(errors.requestTime)}
@@ -114,7 +115,7 @@ function HelpRequestForm({
       <Form.Group className="mb-3">
         <Form.Label htmlFor="explanation">Explanation</Form.Label>
         <Form.Control
-          data-testid={testIdPrefix + "-explanation"}
+
           id="explanation"
           type="text"
           isInvalid={Boolean(errors.explanation)}
@@ -128,31 +129,23 @@ function HelpRequestForm({
       </Form.Group>
 
       <Form.Group className="mb-3">
-        <Form.Label>Solved</Form.Label>
-
-        <Form.Check
-          type="radio"
-          id="solved-yes"
-          label="Yes"
-          value="true"
-          {...register("solved", { required: "Please choose Yes or No." })}
+        <Form.Label htmlFor="solved">Solved</Form.Label>
+        <Form.Control
+          id="solved"
+          type="text"
+          data-testid={testIdPrefix + "-solved"}
+          isInvalid={Boolean(errors.solved)}
+          {...register("solved", {
+            required: "Solved is required.",
+            validate: validateSolved,
+          })}
         />
-        <Form.Check
-          type="radio"
-          id="solved-no"
-          label="No"
-          value="false"
-          {...register("solved", { required: "Please choose Yes or No." })}
-        />
-
-        {errors.solved && (
-          <div className="invalid-feedback d-block">
-            {errors.solved.message}
-          </div>
-        )}
+        <Form.Control.Feedback type="invalid">
+          {errors.solved?.message}
+        </Form.Control.Feedback>
       </Form.Group>
 
-      <Button type="submit" data-testid={testIdPrefix + "-submit"}>
+      <Button type="submit" >
         {buttonLabel}
       </Button>
       <Button
