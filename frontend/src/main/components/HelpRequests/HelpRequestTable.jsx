@@ -36,7 +36,6 @@ export default function HelpRequestTable({
 
   const columns = [
     {
-
       accessorKey: "id", // accessor is the "key" in the data
     },
 
@@ -48,7 +47,7 @@ export default function HelpRequestTable({
       header: "TeamId",
       accessorKey: "teamId",
     },
-        {
+    {
       header: "TableOrBreakoutRoom",
       accessorKey: "tableOrBreakoutRoom",
     },
@@ -56,7 +55,7 @@ export default function HelpRequestTable({
       header: "RequestTime",
       accessorKey: "requestTime",
     },
-        {
+    {
       header: "Explanation",
       accessorKey: "explanation",
     },
