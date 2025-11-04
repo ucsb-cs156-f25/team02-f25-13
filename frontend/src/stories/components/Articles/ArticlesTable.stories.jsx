@@ -1,6 +1,6 @@
 import React from "react";
 import ArticlesTable from "main/components/Articles/ArticlesTable";
-import { articlesFixtures } from "fixtures/articlesFixtures.";
+import { articlesFixtures } from "fixtures/articlesFixtures";
 import { currentUserFixtures } from "fixtures/currentUserFixtures";
 import { http, HttpResponse } from "msw";
 
