@@ -28,12 +28,18 @@ describe("UCSBDiningCommonsMenuItemForm tests", () => {
   test("renders correctly when passing in a UCSBDiningCommonsMenuItem", async () => {
     render(
       <Router>
-        <UCSBDiningCommonsMenuItemForm initialContents={ucsbDiningCommonsMenuItemFixtures.oneUCSBDiningCommonsMenuItem} />
+        <UCSBDiningCommonsMenuItemForm
+          initialContents={
+            ucsbDiningCommonsMenuItemFixtures.oneUCSBDiningCommonsMenuItem
+          }
+        />
       </Router>,
     );
     await screen.findByTestId(/UCSBDiningCommonsMenuItemForm-id/);
     expect(screen.getByText(/Id/)).toBeInTheDocument();
-    expect(screen.getByTestId(/UCSBDiningCommonsMenuItemForm-id/)).toHaveValue("1");
+    expect(screen.getByTestId(/UCSBDiningCommonsMenuItemForm-id/)).toHaveValue(
+      "1",
+    );
   });
 
   test("Correct Error messsages on bad input", async () => {
@@ -42,17 +48,24 @@ describe("UCSBDiningCommonsMenuItemForm tests", () => {
         <UCSBDiningCommonsMenuItemForm />
       </Router>,
     );
-    await screen.findByTestId("UCSBDiningCommonsMenuItemForm-diningCommonsCode");
+    await screen.findByTestId(
+      "UCSBDiningCommonsMenuItemForm-diningCommonsCode",
+    );
     const nameField = screen.getByTestId("UCSBDiningCommonsMenuItemForm-name");
-    const submitButton = screen.getByTestId("UCSBDiningCommonsMenuItemForm-submit");
+    const submitButton = screen.getByTestId(
+      "UCSBDiningCommonsMenuItemForm-submit",
+    );
 
-    fireEvent.change(nameField, { target: { value: "bad-inputtttttttttttttttttttttttttttttttttttttttttttttttttttttttt" } });
+    fireEvent.change(nameField, {
+      target: {
+        value:
+          "bad-inputtttttttttttttttttttttttttttttttttttttttttttttttttttttttt",
+      },
+    });
     fireEvent.click(submitButton);
 
     await screen.findByText(/Max length 30 characters/);
-    expect(
-      screen.getByText(/Max length 30 characters/),
-    ).toBeInTheDocument();
+    expect(screen.getByText(/Max length 30 characters/)).toBeInTheDocument();
   });
 
   test("Correct Error messsages on missing input", async () => {
@@ -62,7 +75,9 @@ describe("UCSBDiningCommonsMenuItemForm tests", () => {
       </Router>,
     );
     await screen.findByTestId("UCSBDiningCommonsMenuItemForm-submit");
-    const submitButton = screen.getByTestId("UCSBDiningCommonsMenuItemForm-submit");
+    const submitButton = screen.getByTestId(
+      "UCSBDiningCommonsMenuItemForm-submit",
+    );
 
     fireEvent.click(submitButton);
 
@@ -79,15 +94,25 @@ describe("UCSBDiningCommonsMenuItemForm tests", () => {
         <UCSBDiningCommonsMenuItemForm submitAction={mockSubmitAction} />
       </Router>,
     );
-    await screen.findByTestId("UCSBDiningCommonsMenuItemForm-diningCommonsCode");
+    await screen.findByTestId(
+      "UCSBDiningCommonsMenuItemForm-diningCommonsCode",
+    );
 
-    const diningCommonsCodeField = screen.getByTestId("UCSBDiningCommonsMenuItemForm-diningCommonsCode");
+    const diningCommonsCodeField = screen.getByTestId(
+      "UCSBDiningCommonsMenuItemForm-diningCommonsCode",
+    );
     const nameField = screen.getByTestId("UCSBDiningCommonsMenuItemForm-name");
-    const stationField = screen.getByTestId("UCSBDiningCommonsMenuItemForm-station");
-    const submitButton = screen.getByTestId("UCSBDiningCommonsMenuItemForm-submit");
+    const stationField = screen.getByTestId(
+      "UCSBDiningCommonsMenuItemForm-station",
+    );
+    const submitButton = screen.getByTestId(
+      "UCSBDiningCommonsMenuItemForm-submit",
+    );
 
     fireEvent.change(diningCommonsCodeField, { target: { value: "ortega" } });
-    fireEvent.change(nameField, { target: { value: "Baked Pesto Pasta with Chicken" } });
+    fireEvent.change(nameField, {
+      target: { value: "Baked Pesto Pasta with Chicken" },
+    });
     fireEvent.change(stationField, {
       target: { value: "Entree Specials" },
     });
@@ -107,7 +132,9 @@ describe("UCSBDiningCommonsMenuItemForm tests", () => {
       </Router>,
     );
     await screen.findByTestId("UCSBDiningCommonsMenuItemForm-cancel");
-    const cancelButton = screen.getByTestId("UCSBDiningCommonsMenuItemForm-cancel");
+    const cancelButton = screen.getByTestId(
+      "UCSBDiningCommonsMenuItemForm-cancel",
+    );
 
     fireEvent.click(cancelButton);
 

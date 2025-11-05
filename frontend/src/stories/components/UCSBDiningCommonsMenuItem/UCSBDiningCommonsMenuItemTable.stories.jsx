@@ -23,13 +23,15 @@ Empty.args = {
 export const ThreeItemsOrdinaryUser = Template.bind({});
 
 ThreeItemsOrdinaryUser.args = {
-  ucsbDiningCommonsMenuItem: ucsbDiningCommonsMenuItemFixtures.threeUCSBDiningCommonsMenuItems,
+  ucsbDiningCommonsMenuItem:
+    ucsbDiningCommonsMenuItemFixtures.threeUCSBDiningCommonsMenuItems,
   currentUser: currentUserFixtures.userOnly,
 };
 
 export const ThreeItemsAdminUser = Template.bind({});
 ThreeItemsAdminUser.args = {
-  ucsbDiningCommonsMenuItem: ucsbDiningCommonsMenuItemFixtures.threeUCSBDiningCommonsMenuItems,
+  ucsbDiningCommonsMenuItem:
+    ucsbDiningCommonsMenuItemFixtures.threeUCSBDiningCommonsMenuItems,
   currentUser: currentUserFixtures.adminUser,
 };
 

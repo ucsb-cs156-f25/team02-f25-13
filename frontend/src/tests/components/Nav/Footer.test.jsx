@@ -7,7 +7,7 @@ import { afterEach, expect, beforeEach, vi, describe, test } from "vitest";
 // Use doMock and resetModules for isolated mocks.
 // The vi.doMock and vi.resetModules calls should be inside the describe blocks.
 
-// import axios from "axios"; 
+// import axios from "axios";
 
 const queryClient = new QueryClient();
 
@@ -22,8 +22,6 @@ describe("Footer tests", () => {
       // vi.spyOn(axios, "get").mockResolvedValue({
       //   data: systemInfoFixtures.initialData,
       // });
-
-
 
       // Use vi.doMock for an explicit mock that is not hoisted.
       vi.doMock("main/utils/systemInfo", () => ({
