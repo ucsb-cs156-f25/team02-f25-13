@@ -84,14 +84,14 @@ describe("UCSBOrganizationIndexPage tests", () => {
 
     await waitFor(() => {
       expect(
-        screen.getByTestId(`${testId}-cell-row-0-col-id`),
-      ).toHaveTextContent("1");
+        screen.getByTestId(`${testId}-cell-row-0-col-orgCode`),
+      ).toHaveTextContent("GG");
     });
-    expect(screen.getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent(
-      "2",
+    expect(screen.getByTestId(`${testId}-cell-row-1-col-orgCode`)).toHaveTextContent(
+      "TTG",
     );
-    expect(screen.getByTestId(`${testId}-cell-row-2-col-id`)).toHaveTextContent(
-      "3",
+    expect(screen.getByTestId(`${testId}-cell-row-2-col-orgCode`)).toHaveTextContent(
+      "CIA",
     );
 
     const createUCSBOrganizationButton = screen.queryByText("Create UCSB Organization");
@@ -143,7 +143,7 @@ describe("UCSBOrganizationIndexPage tests", () => {
       .reply(200, ucsbOrganizationFixtures.threeUCSBOrganizations);
     axiosMock
       .onDelete("/api/ucsborganization")
-      .reply(200, "UCSB Organization with id 1 was deleted");
+      .reply(200, "UCSB Organization with orgCode GG was deleted");
 
     render(
       <QueryClientProvider client={queryClient}>
@@ -155,12 +155,12 @@ describe("UCSBOrganizationIndexPage tests", () => {
 
     await waitFor(() => {
       expect(
-        screen.getByTestId(`${testId}-cell-row-0-col-id`),
+        screen.getByTestId(`${testId}-cell-row-0-col-orgCode`),
       ).toBeInTheDocument();
     });
 
-    expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent(
-      "1",
+    expect(screen.getByTestId(`${testId}-cell-row-0-col-orgCode`)).toHaveTextContent(
+      "GG",
     );
 
     const deleteButton = await screen.findByTestId(
@@ -171,7 +171,7 @@ describe("UCSBOrganizationIndexPage tests", () => {
     fireEvent.click(deleteButton);
 
     await waitFor(() => {
-      expect(mockToast).toBeCalledWith("UCSB Organization with id 1 was deleted");
+      expect(mockToast).toBeCalledWith("UCSB Organization with orgCode GG was deleted");
     });
 
     await waitFor(() => {
