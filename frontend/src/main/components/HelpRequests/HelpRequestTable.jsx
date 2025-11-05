@@ -5,19 +5,19 @@ import { useBackendMutation } from "main/utils/useBackend";
 import {
   cellToAxiosParamsDelete,
   onDeleteSuccess,
-} from "main/utils/menuItemReviewUtils";
+} from "main/utils/helpRequestUtils";
 import { useNavigate } from "react-router";
 import { hasRole } from "main/utils/useCurrentUser";
 
-export default function MenuItemReviewTable({
-  reviews,
+export default function HelpRequestTable({
+  helpRequests,
   currentUser,
-  testIdPrefix = "MenuItemReviewTable",
+  testIdPrefix = "HelpRequestTable",
 }) {
   const navigate = useNavigate();
 
   const editCallback = (cell) => {
-    navigate(`/MenuItemReview/edit/${cell.row.original.id}`);
+    navigate(`/help_requests/edit/${cell.row.original.id}`);
   };
 
   // Stryker disable all : hard to test for query caching
@@ -25,7 +25,7 @@ export default function MenuItemReviewTable({
   const deleteMutation = useBackendMutation(
     cellToAxiosParamsDelete,
     { onSuccess: onDeleteSuccess },
-    ["/api/menuitemreviews/all"],
+    ["/api/help_requests/all"],
   );
   // Stryker restore all
 
@@ -36,28 +36,32 @@ export default function MenuItemReviewTable({
 
   const columns = [
     {
-      header: "id",
-      accessorKey: "id", 
+      accessorKey: "id", // accessor is the "key" in the data
     },
 
     {
-      header: "itemId",
-      accessorKey: "itemId",
+      header: "RequesterEmail",
+      accessorKey: "requesterEmail",
     },
     {
-      header: "reviewerEmail",
-      accessorKey: "reviewerEmail",
+      header: "TeamId",
+      accessorKey: "teamId",
     },
     {
-      header: "stars",
-      accessorKey: "stars",
+      header: "TableOrBreakoutRoom",
+      accessorKey: "tableOrBreakoutRoom",
     },
-    { 
-        header: "dateReviewed", 
-        accessorKey: "dateReviewed" },
     {
-      header: "comments",
-      accessorKey: "comments",
+      header: "RequestTime",
+      accessorKey: "requestTime",
+    },
+    {
+      header: "Explanation",
+      accessorKey: "explanation",
+    },
+    {
+      header: "Solved",
+      accessorKey: "solved",
     },
   ];
 
@@ -69,6 +73,6 @@ export default function MenuItemReviewTable({
   }
 
   return (
-    <OurTable data={reviews} columns={columns} testid={testIdPrefix}/>
+    <OurTable data={helpRequests} columns={columns} testid={testIdPrefix} />
   );
 }
