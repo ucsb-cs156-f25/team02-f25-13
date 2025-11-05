@@ -68,6 +68,7 @@ describe("UCSBOrganizationEditPage tests", () => {
         </QueryClientProvider>,
       );
       await screen.findByText("Edit UCSB Organization");
+      expect(screen.queryByTestId("UCSBOrganization-orgCode")).not.toBeInTheDocument();
       restoreConsole();
     });
   });
