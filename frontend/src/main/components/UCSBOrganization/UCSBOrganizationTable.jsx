@@ -60,12 +60,13 @@ export default function UCSBOrganizationTable({
             ButtonColumn("Delete", "danger", deleteCallback, testIdPrefix),
         );
     }
-
     return (
         <OurTable
-            data={ucsbOrganizations}
-            columns={columns}
-            testid={testIdPrefix}
+        data={ucsbOrganizations}
+        columns={columns}
+        testid={testIdPrefix}
         />
     );
 }
+
+
