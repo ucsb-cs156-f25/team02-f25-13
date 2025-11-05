@@ -11,7 +11,7 @@ export default {
   component: MenuItemReviewEditPage,
 };
 
-const Template = () => <RestaurantEditPage storybook={true} />;
+const Template = () => <MenuItemReviewEditPage storybook={true} />;
 
 export const Default = Template.bind({});
 Default.parameters = {
@@ -26,15 +26,15 @@ Default.parameters = {
         status: 200,
       });
     }),
-    http.get("/api/restaurants", () => {
-      return HttpResponse.json(restaurantFixtures.threeRestaurants[0], {
+    http.get("/api/menuitemreviews", () => {
+      return HttpResponse.json(menuItemReviewFixtures.threeReviews[0], {
         status: 200,
       });
     }),
-    http.put("/api/restaurants", () => {
+    http.put("/api/menuitemreviews", () => {
       return HttpResponse.json({}, { status: 200 });
     }),
-    http.put("/api/restaurants", (req) => {
+    http.put("/api/menuitemreviews", (req) => {
       window.alert("PUT: " + req.url + " and body: " + req.body);
       return HttpResponse.json({}, { status: 200 });
     }),
