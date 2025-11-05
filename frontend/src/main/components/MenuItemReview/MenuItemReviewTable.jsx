@@ -5,18 +5,19 @@ import { useBackendMutation } from "main/utils/useBackend";
 import {
   cellToAxiosParamsDelete,
   onDeleteSuccess,
-} from "main/utils/UCSBOrganizationUtils";
+} from "main/utils/menuItemReviewUtils";
 import { useNavigate } from "react-router";
 import { hasRole } from "main/utils/useCurrentUser";
-export default function UCSBOrganizationTable({
-  ucsbOrganizations,
+
+export default function MenuItemReviewTable({
+  reviews,
   currentUser,
-  testIdPrefix = "UCSBOrganizationTable",
+  testIdPrefix = "MenuItemReviewTable",
 }) {
   const navigate = useNavigate();
 
   const editCallback = (cell) => {
-    navigate(`/ucsborganization/edit/${cell.row.original.orgCode}`);
+    navigate(`/MenuItemReview/edit/${cell.row.original.id}`);
   };
 
   // Stryker disable all : hard to test for query caching
@@ -24,7 +25,7 @@ export default function UCSBOrganizationTable({
   const deleteMutation = useBackendMutation(
     cellToAxiosParamsDelete,
     { onSuccess: onDeleteSuccess },
-    ["/api/ucsborganization/all"],
+    ["/api/menuitemreviews/all"],
   );
   // Stryker restore all
 
@@ -36,26 +37,31 @@ export default function UCSBOrganizationTable({
   const columns = [
     {
       header: "id",
-      accessorKey: "id", // accessor is the "key" in the data
+      accessorKey: "id",
+    },
+
+    {
+      header: "itemId",
+      accessorKey: "itemId",
     },
     {
-      header: "Organization Code",
-      accessorKey: "orgCode",
+      header: "reviewerEmail",
+      accessorKey: "reviewerEmail",
     },
     {
-      header: "Organization Translation Short",
-      accessorKey: "orgTranslationShort",
+      header: "stars",
+      accessorKey: "stars",
     },
     {
-      header: "Organization Translation",
-      accessorKey: "orgTranslation",
+      header: "dateReviewed",
+      accessorKey: "dateReviewed",
     },
     {
-      header: "Inactive",
-      accessorKey: "inactive",
-      cell: (info) => (info.getValue() ? "true" : "false"),
+      header: "comments",
+      accessorKey: "comments",
     },
   ];
+
   if (hasRole(currentUser, "ROLE_ADMIN")) {
     columns.push(ButtonColumn("Edit", "primary", editCallback, testIdPrefix));
     columns.push(
@@ -63,11 +69,5 @@ export default function UCSBOrganizationTable({
     );
   }
 
-  return (
-    <OurTable
-      data={ucsbOrganizations}
-      columns={columns}
-      testid={testIdPrefix}
-    />
-  );
+  return <OurTable data={reviews} columns={columns} testid={testIdPrefix} />;
 }

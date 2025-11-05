@@ -5,18 +5,19 @@ import { useBackendMutation } from "main/utils/useBackend";
 import {
   cellToAxiosParamsDelete,
   onDeleteSuccess,
-} from "main/utils/UCSBOrganizationUtils";
+} from "main/utils/helpRequestUtils";
 import { useNavigate } from "react-router";
 import { hasRole } from "main/utils/useCurrentUser";
-export default function UCSBOrganizationTable({
-  ucsbOrganizations,
+
+export default function HelpRequestTable({
+  helpRequests,
   currentUser,
-  testIdPrefix = "UCSBOrganizationTable",
+  testIdPrefix = "HelpRequestTable",
 }) {
   const navigate = useNavigate();
 
   const editCallback = (cell) => {
-    navigate(`/ucsborganization/edit/${cell.row.original.orgCode}`);
+    navigate(`/help_requests/edit/${cell.row.original.id}`);
   };
 
   // Stryker disable all : hard to test for query caching
@@ -24,7 +25,7 @@ export default function UCSBOrganizationTable({
   const deleteMutation = useBackendMutation(
     cellToAxiosParamsDelete,
     { onSuccess: onDeleteSuccess },
-    ["/api/ucsborganization/all"],
+    ["/api/help_requests/all"],
   );
   // Stryker restore all
 
@@ -35,27 +36,35 @@ export default function UCSBOrganizationTable({
 
   const columns = [
     {
-      header: "id",
       accessorKey: "id", // accessor is the "key" in the data
     },
+
     {
-      header: "Organization Code",
-      accessorKey: "orgCode",
+      header: "RequesterEmail",
+      accessorKey: "requesterEmail",
     },
     {
-      header: "Organization Translation Short",
-      accessorKey: "orgTranslationShort",
+      header: "TeamId",
+      accessorKey: "teamId",
     },
     {
-      header: "Organization Translation",
-      accessorKey: "orgTranslation",
+      header: "TableOrBreakoutRoom",
+      accessorKey: "tableOrBreakoutRoom",
     },
     {
-      header: "Inactive",
-      accessorKey: "inactive",
-      cell: (info) => (info.getValue() ? "true" : "false"),
+      header: "RequestTime",
+      accessorKey: "requestTime",
+    },
+    {
+      header: "Explanation",
+      accessorKey: "explanation",
+    },
+    {
+      header: "Solved",
+      accessorKey: "solved",
     },
   ];
+
   if (hasRole(currentUser, "ROLE_ADMIN")) {
     columns.push(ButtonColumn("Edit", "primary", editCallback, testIdPrefix));
     columns.push(
@@ -64,10 +73,6 @@ export default function UCSBOrganizationTable({
   }
 
   return (
-    <OurTable
-      data={ucsbOrganizations}
-      columns={columns}
-      testid={testIdPrefix}
-    />
+    <OurTable data={helpRequests} columns={columns} testid={testIdPrefix} />
   );
 }
