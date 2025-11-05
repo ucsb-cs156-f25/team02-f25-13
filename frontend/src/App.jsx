@@ -18,6 +18,13 @@ import RestaurantEditPage from "main/pages/Restaurants/RestaurantEditPage";
 import MenuItemReviewIndexPage from "main/pages/MenuItemReview/MenuItemReviewIndexPage";
 import MenuItemReviewCreatePage from "main/pages/MenuItemReview/MenuItemReviewCreatePage";
 import MenuItemReviewEditPage from "main/pages/MenuItemReview/MenuItemReviewEditPage";
+import HelpRequestIndexPage from "main/pages/HelpRequests/HelpRequestIndexPage";
+import HelpRequestCreatePage from "main/pages/HelpRequests/HelpRequestCreatePage";
+import HelpRequestEditPage from "main/pages/HelpRequests/HelpRequestEditPage";
+
+import PlaceholderIndexPage from "main/pages/Placeholder/PlaceholderIndexPage";
+import PlaceholderCreatePage from "main/pages/Placeholder/PlaceholderCreatePage";
+import PlaceholderEditPage from "main/pages/Placeholder/PlaceholderEditPage";
 
 import { hasRole, useCurrentUser } from "main/utils/useCurrentUser";
 
@@ -97,20 +104,43 @@ function App() {
       )}
       {hasRole(currentUser, "ROLE_USER") && (
         <>
-          <Route exact path="/placeholder" element={<PlaceholderIndexPage />} />
+          <Route exact path="/restaurants" element={<RestaurantIndexPage />} />
         </>
       )}
       {hasRole(currentUser, "ROLE_ADMIN") && (
         <>
           <Route
             exact
-            path="/placeholder/edit/:id"
-            element={<PlaceholderEditPage />}
+            path="/restaurants/edit/:id"
+            element={<RestaurantEditPage />}
           />
           <Route
             exact
-            path="/placeholder/create"
-            element={<PlaceholderCreatePage />}
+            path="/restaurants/create"
+            element={<RestaurantCreatePage />}
+          />
+        </>
+      )}
+      {hasRole(currentUser, "ROLE_USER") && (
+        <>
+          <Route
+            exact
+            path="/help_requests"
+            element={<HelpRequestIndexPage />}
+          />
+        </>
+      )}
+      {hasRole(currentUser, "ROLE_ADMIN") && (
+        <>
+          <Route
+            exact
+            path="/help_requests/edit/:id"
+            element={<HelpRequestEditPage />}
+          />
+          <Route
+            exact
+            path="/help_requests/create"
+            element={<HelpRequestCreatePage />}
           />
         </>
       )}
