@@ -7,6 +7,8 @@ import { afterEach, expect, beforeEach, vi, describe, test } from "vitest";
 // Use doMock and resetModules for isolated mocks.
 // The vi.doMock and vi.resetModules calls should be inside the describe blocks.
 
+// import axios from "axios"; 
+
 const queryClient = new QueryClient();
 
 describe("Footer tests", () => {
@@ -15,6 +17,14 @@ describe("Footer tests", () => {
       // Clears the module cache to ensure each test suite starts fresh.
       vi.resetModules();
       queryClient.clear();
+
+      // add axios
+      // vi.spyOn(axios, "get").mockResolvedValue({
+      //   data: systemInfoFixtures.initialData,
+      // });
+
+
+
       // Use vi.doMock for an explicit mock that is not hoisted.
       vi.doMock("main/utils/systemInfo", () => ({
         useSystemInfo: () => ({
@@ -66,9 +76,13 @@ describe("Footer tests", () => {
       // Clears the module cache before this test suite as well.
       vi.resetModules();
       queryClient.clear();
+
+      // add axios
+      // vi.spyOn(axios, "get").mockResolvedValue({ data: {} }); // used to be data: null
+
       // Use vi.doMock to apply a different mock for this test.
       vi.doMock("main/utils/systemInfo", () => ({
-        useSystemInfo: () => ({ data: null, isSuccess: true }),
+        useSystemInfo: () => ({ data: null, isSuccess: true }), // used to be data: null
       }));
     });
 
@@ -93,7 +107,7 @@ describe("Footer tests", () => {
         "footer-see-source-code",
       );
       expect(footer_see_source_code).toBeInTheDocument();
-      expect(footer_see_source_code).toBeEmpty();
+      expect(footer_see_source_code).toBeEmptyDOMElement();
     });
   });
 });
