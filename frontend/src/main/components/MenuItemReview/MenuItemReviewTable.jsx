@@ -37,7 +37,7 @@ export default function MenuItemReviewTable({
   const columns = [
     {
       header: "id",
-      accessorKey: "id",
+      accessorKey: "id", 
     },
 
     {
@@ -52,10 +52,9 @@ export default function MenuItemReviewTable({
       header: "stars",
       accessorKey: "stars",
     },
-    {
-      header: "dateReviewed",
-      accessorKey: "dateReviewed",
-    },
+    { 
+        header: "dateReviewed", 
+        accessorKey: "dateReviewed" },
     {
       header: "comments",
       accessorKey: "comments",
@@ -69,5 +68,7 @@ export default function MenuItemReviewTable({
     );
   }
 
-  return <OurTable data={reviews} columns={columns} testid={testIdPrefix} />;
+  return (
+    <OurTable data={reviews} columns={columns} testid={testIdPrefix}/>
+  );
 }

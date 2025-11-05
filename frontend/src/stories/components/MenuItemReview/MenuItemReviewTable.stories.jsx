@@ -6,7 +6,7 @@ import { http, HttpResponse } from "msw";
 
 export default {
   title: "components/MenuItemReview/MenuItemReviewTable",
-  component: ReviewTable,
+  component: ReviewTable, 
 };
 
 const Template = (args) => {
