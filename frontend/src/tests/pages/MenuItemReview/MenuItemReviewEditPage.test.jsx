@@ -39,7 +39,6 @@ let axiosMock;
 const testIdPrefix = "MenuItemReviewForm"; // The prefix used by the form component
 
 describe("MenuItemReviewEditPage tests", () => {
-  
   // --- Setup functions (unchanged) ---
   const setupUserOnly = () => {
     axiosMock.reset();
@@ -51,7 +50,7 @@ describe("MenuItemReviewEditPage tests", () => {
       .onGet("/api/systemInfo")
       .reply(200, systemInfoFixtures.showingNeither);
   };
-  
+
   /*const setupAdminUser = () => {
     axiosMock.reset();
     axiosMock.resetHistory();
@@ -91,10 +90,12 @@ describe("MenuItemReviewEditPage tests", () => {
           </MemoryRouter>
         </QueryClientProvider>,
       );
-      
-      await screen.findByText("Edit Review"); 
+
+      await screen.findByText("Edit Review");
       // Check if one of the form fields is NOT present (form only renders if data is available)
-      expect(screen.queryByTestId(`${testIdPrefix}-itemId`)).not.toBeInTheDocument(); 
+      expect(
+        screen.queryByTestId(`${testIdPrefix}-itemId`),
+      ).not.toBeInTheDocument();
       restoreConsole();
     });
   });
@@ -103,7 +104,7 @@ describe("MenuItemReviewEditPage tests", () => {
   describe("tests where backend is working normally", () => {
     const initialReview = menuItemReviewFixtures.oneReview[0];
     initialReview.id = 17; // Ensure ID matches useParams mock
-    
+
     const updatedReview = {
       id: 17,
       itemId: 5,
@@ -116,10 +117,12 @@ describe("MenuItemReviewEditPage tests", () => {
     beforeEach(() => {
       axiosMock = new AxiosMockAdapter(axios);
       setupUserOnly();
-        
+
       // Mock the GET request to fetch initial data
-      axiosMock.onGet("/api/menuitemreviews", { params: { id: 17 } }).reply(200, initialReview);
-      
+      axiosMock
+        .onGet("/api/menuitemreviews", { params: { id: 17 } })
+        .reply(200, initialReview);
+
       // Mock the PUT request for the update operation
       axiosMock.onPut("/api/menuitemreviews").reply(200, updatedReview);
     });
@@ -137,7 +140,7 @@ describe("MenuItemReviewEditPage tests", () => {
       render(
         <QueryClientProvider client={queryClient}>
           <MemoryRouter>
-            <MenuItemReviewEditPage /> 
+            <MenuItemReviewEditPage />
           </MemoryRouter>
         </QueryClientProvider>,
       );
@@ -158,7 +161,9 @@ describe("MenuItemReviewEditPage tests", () => {
       expect(itemIdField).toHaveValue(initialReview.itemId);
       expect(emailField).toHaveValue(initialReview.reviewerEmail);
       expect(starsField).toHaveValue(initialReview.stars);
-      expect(dateField).toHaveValue(initialReview.dateReviewed.substring(0, 16)); // datetime-local format is YYYY-MM-DDTHH:MM
+      expect(dateField).toHaveValue(
+        initialReview.dateReviewed.substring(0, 16),
+      ); // datetime-local format is YYYY-MM-DDTHH:MM
       expect(commentsField).toHaveValue(initialReview.comments);
       expect(submitButton).toHaveTextContent("Update");
     });
@@ -183,11 +188,13 @@ describe("MenuItemReviewEditPage tests", () => {
 
       // Change values to the new mock values (must be strings from form)
       fireEvent.change(itemIdField, { target: { value: "5" } });
-      fireEvent.change(emailField, { target: { value: "new.email@example.com" } });
+      fireEvent.change(emailField, {
+        target: { value: "new.email@example.com" },
+      });
       fireEvent.change(starsField, { target: { value: "1" } });
       fireEvent.change(dateField, { target: { value: "2026-06-15T14:30" } }); // New Date value
       fireEvent.change(commentsField, { target: { value: "It was awful." } });
-      
+
       fireEvent.click(submitButton);
 
       // Assert toast and navigation
@@ -203,17 +210,17 @@ describe("MenuItemReviewEditPage tests", () => {
       });
       expect(axiosMock.history.put[0].url).toBe("/api/menuitemreviews");
       expect(axiosMock.history.put[0].params).toEqual({ id: 17 });
-      
+
       // Assert the request body data
       expect(JSON.parse(axiosMock.history.put[0].data)).toEqual({
-        itemId: "5", 
+        itemId: "5",
         reviewerEmail: "new.email@example.com",
         stars: "1",
         dateReviewed: "2026-06-15T14:30", // Assert the submitted date (no seconds)
         comments: "It was awful.",
-      }); 
+      });
     });
-    
+
     // Test for API failure
     test("submitting an update request that fails shows a toast", async () => {
       // Mock the PUT request to fail with a 500 error
@@ -235,12 +242,14 @@ describe("MenuItemReviewEditPage tests", () => {
       const submitButton = screen.getByTestId(`${testIdPrefix}-submit`);
 
       // Change a value to trigger the PUT request
-      fireEvent.change(itemIdField, { target: { value: "5" } }); 
+      fireEvent.change(itemIdField, { target: { value: "5" } });
       fireEvent.click(submitButton);
 
       // Assert that the error toast is shown
       await waitFor(() => expect(mockToast).toBeCalled());
-      expect(mockToast).toBeCalledWith("Error: Request failed with status code 500");
+      expect(mockToast).toBeCalledWith(
+        "Error: Request failed with status code 500",
+      );
 
       // Assert that navigation did NOT happen
       expect(mockNavigate).not.toBeCalled();

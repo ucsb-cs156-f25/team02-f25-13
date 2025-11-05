@@ -22,19 +22,19 @@ vi.mock("react-toastify", async (importOriginal) => {
 // Mock the navigate hook for the edit button test
 const mockedNavigate = vi.fn();
 vi.mock("react-router", async () => {
-    const originalModule = await vi.importActual("react-router");
-    return {
-        ...originalModule,
-        useNavigate: () => mockedNavigate,
-    };
+  const originalModule = await vi.importActual("react-router");
+  return {
+    ...originalModule,
+    useNavigate: () => mockedNavigate,
+  };
 });
 
 describe("MenuItemReviewIndexPage tests", () => {
   const axiosMock = new AxiosMockAdapter(axios);
 
   // Use the testIdPrefix defined in the component
-  const testId = "MenuItemReviewTable"; 
-  
+  const testId = "MenuItemReviewTable";
+
   // --- Setup functions (unchanged) ---
   const setupUserOnly = () => {
     axiosMock.reset();
@@ -88,7 +88,7 @@ describe("MenuItemReviewIndexPage tests", () => {
     // Use the correct endpoint and fixtures
     axiosMock
       .onGet("/api/menuitemreviews/all")
-      .reply(200, menuItemReviewFixtures.threeReviews); 
+      .reply(200, menuItemReviewFixtures.threeReviews);
 
     render(
       <QueryClientProvider client={queryClient}>
@@ -111,15 +111,14 @@ describe("MenuItemReviewIndexPage tests", () => {
     expect(screen.getByTestId(`${testId}-cell-row-2-col-id`)).toHaveTextContent(
       menuItemReviewFixtures.threeReviews[2].id,
     );
-    
-    // Assert the presence of review-specific data (e.g., email and comments from the fixture)
-    expect(screen.getByTestId(`${testId}-cell-row-0-col-reviewerEmail`)).toHaveTextContent(
-      menuItemReviewFixtures.threeReviews[0].reviewerEmail,
-    );
-    expect(screen.getByTestId(`${testId}-cell-row-0-col-comments`)).toHaveTextContent(
-      menuItemReviewFixtures.threeReviews[0].comments,
-    );
 
+    // Assert the presence of review-specific data (e.g., email and comments from the fixture)
+    expect(
+      screen.getByTestId(`${testId}-cell-row-0-col-reviewerEmail`),
+    ).toHaveTextContent(menuItemReviewFixtures.threeReviews[0].reviewerEmail);
+    expect(
+      screen.getByTestId(`${testId}-cell-row-0-col-comments`),
+    ).toHaveTextContent(menuItemReviewFixtures.threeReviews[0].comments);
 
     // Create Review Button should not be present for userOnly
     const createReviewButton = screen.queryByText("Create Review");
@@ -139,7 +138,7 @@ describe("MenuItemReviewIndexPage tests", () => {
     setupUserOnly();
 
     // Use the correct endpoint
-    axiosMock.onGet("/api/menuitemreviews/all").timeout(); 
+    axiosMock.onGet("/api/menuitemreviews/all").timeout();
 
     const restoreConsole = mockConsole();
 
@@ -147,7 +146,7 @@ describe("MenuItemReviewIndexPage tests", () => {
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
           {/* Use the correct component */}
-          <MenuItemReviewIndexPage /> 
+          <MenuItemReviewIndexPage />
         </MemoryRouter>
       </QueryClientProvider>,
     );
@@ -167,12 +166,10 @@ describe("MenuItemReviewIndexPage tests", () => {
   // Test for delete functionality (admin user)
   test("what happens when you click delete, admin", async () => {
     setupAdminUser();
-    
+
     // Use the correct endpoint and fixtures
     const reviews = menuItemReviewFixtures.threeReviews;
-    axiosMock
-      .onGet("/api/menuitemreviews/all")
-      .reply(200, reviews);
+    axiosMock.onGet("/api/menuitemreviews/all").reply(200, reviews);
     // Use the correct delete endpoint
     axiosMock
       .onDelete("/api/menuitemreviews")
@@ -182,7 +179,7 @@ describe("MenuItemReviewIndexPage tests", () => {
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
           {/* Use the correct component */}
-          <MenuItemReviewIndexPage /> 
+          <MenuItemReviewIndexPage />
         </MemoryRouter>
       </QueryClientProvider>,
     );
@@ -211,7 +208,7 @@ describe("MenuItemReviewIndexPage tests", () => {
     await waitFor(() => {
       expect(mockToast).toBeCalledWith("MenuItemReview with id 2 was deleted");
     });
-    
+
     // Assert the delete API call was made
     await waitFor(() => {
       expect(axiosMock.history.delete.length).toBe(1);
@@ -220,15 +217,13 @@ describe("MenuItemReviewIndexPage tests", () => {
     // Assert the ID param was passed correctly
     expect(axiosMock.history.delete[0].params).toEqual({ id: reviews[0].id });
   });
-  
+
   // Test for edit functionality (admin user)
   test("what happens when you click edit, admin", async () => {
     setupAdminUser();
-    
+
     const reviews = menuItemReviewFixtures.threeReviews;
-    axiosMock
-      .onGet("/api/menuitemreviews/all")
-      .reply(200, reviews);
+    axiosMock.onGet("/api/menuitemreviews/all").reply(200, reviews);
 
     render(
       <QueryClientProvider client={queryClient}>
@@ -239,15 +234,21 @@ describe("MenuItemReviewIndexPage tests", () => {
     );
 
     await waitFor(() => {
-      expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toBeInTheDocument();
+      expect(
+        screen.getByTestId(`${testId}-cell-row-0-col-id`),
+      ).toBeInTheDocument();
     });
 
-    const editButton = screen.getByTestId(`${testId}-cell-row-0-col-Edit-button`);
+    const editButton = screen.getByTestId(
+      `${testId}-cell-row-0-col-Edit-button`,
+    );
     fireEvent.click(editButton);
 
     // Assert that the navigation function was called with the correct path
     await waitFor(() => {
-      expect(mockedNavigate).toHaveBeenCalledWith(`/MenuItemReview/edit/${reviews[0].id}`);
+      expect(mockedNavigate).toHaveBeenCalledWith(
+        `/MenuItemReview/edit/${reviews[0].id}`,
+      );
     });
   });
 });

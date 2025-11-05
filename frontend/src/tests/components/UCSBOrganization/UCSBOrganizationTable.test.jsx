@@ -19,8 +19,20 @@ vi.mock("react-router", async () => {
 describe("UCSBOrganizationTable tests", () => {
   const queryClient = new QueryClient();
 
-  const expectedHeaders = ["id", "Organization Code", "Organization Translation Short", "Organization Translation", "Inactive"];
-  const expectedFields = ["id", "orgCode", "orgTranslationShort", "orgTranslation", "inactive"];
+  const expectedHeaders = [
+    "id",
+    "Organization Code",
+    "Organization Translation Short",
+    "Organization Translation",
+    "Inactive",
+  ];
+  const expectedFields = [
+    "id",
+    "orgCode",
+    "orgTranslationShort",
+    "orgTranslation",
+    "inactive",
+  ];
   const testId = "UCSBOrganizationTable";
 
   test("renders empty table correctly", () => {
@@ -31,7 +43,10 @@ describe("UCSBOrganizationTable tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <UCSBOrganizationTable ucsbOrganizations={[]} currentUser={currentUser} />
+          <UCSBOrganizationTable
+            ucsbOrganizations={[]}
+            currentUser={currentUser}
+          />
         </MemoryRouter>
       </QueryClientProvider>,
     );
@@ -44,7 +59,7 @@ describe("UCSBOrganizationTable tests", () => {
 
     expectedFields.forEach((field) => {
       const fieldElement = screen.queryByTestId(
-        `${testId}-cell-row-0-col-${field}`
+        `${testId}-cell-row-0-col-${field}`,
       );
       expect(fieldElement).not.toBeInTheDocument();
     });
@@ -84,13 +99,13 @@ describe("UCSBOrganizationTable tests", () => {
       screen.getByTestId(`${testId}-cell-row-0-col-orgCode`),
     ).toHaveTextContent("GG");
     expect(
-        screen.getByTestId(`${testId}-cell-row-0-col-orgTranslationShort`),
+      screen.getByTestId(`${testId}-cell-row-0-col-orgTranslationShort`),
     ).toHaveTextContent("Gaucho Gaming");
     expect(
-        screen.getByTestId(`${testId}-cell-row-0-col-orgTranslation`),
+      screen.getByTestId(`${testId}-cell-row-0-col-orgTranslation`),
     ).toHaveTextContent("UCSB Gaucho Gaming");
     expect(
-        screen.getByTestId(`${testId}-cell-row-0-col-inactive`),
+      screen.getByTestId(`${testId}-cell-row-0-col-inactive`),
     ).toHaveTextContent("false");
 
     expect(screen.getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent(
@@ -100,13 +115,13 @@ describe("UCSBOrganizationTable tests", () => {
       screen.getByTestId(`${testId}-cell-row-1-col-orgCode`),
     ).toHaveTextContent("TTG");
     expect(
-        screen.getByTestId(`${testId}-cell-row-1-col-orgTranslationShort`),
+      screen.getByTestId(`${testId}-cell-row-1-col-orgTranslationShort`),
     ).toHaveTextContent("TTG@UCSB");
     expect(
-        screen.getByTestId(`${testId}-cell-row-1-col-orgTranslation`),
+      screen.getByTestId(`${testId}-cell-row-1-col-orgTranslation`),
     ).toHaveTextContent("UCSB Tabletop Gaming");
     expect(
-        screen.getByTestId(`${testId}-cell-row-1-col-inactive`),
+      screen.getByTestId(`${testId}-cell-row-1-col-inactive`),
     ).toHaveTextContent("false");
     expect(screen.getByTestId(`${testId}-cell-row-2-col-id`)).toHaveTextContent(
       "3",
@@ -115,13 +130,13 @@ describe("UCSBOrganizationTable tests", () => {
       screen.getByTestId(`${testId}-cell-row-2-col-orgCode`),
     ).toHaveTextContent("CIA");
     expect(
-        screen.getByTestId(`${testId}-cell-row-2-col-orgTranslationShort`),
+      screen.getByTestId(`${testId}-cell-row-2-col-orgTranslationShort`),
     ).toHaveTextContent("Central Intelligence Agency");
     expect(
-        screen.getByTestId(`${testId}-cell-row-2-col-orgTranslation`),
+      screen.getByTestId(`${testId}-cell-row-2-col-orgTranslation`),
     ).toHaveTextContent("Central Intelligence Agency");
     expect(
-        screen.getByTestId(`${testId}-cell-row-2-col-inactive`),
+      screen.getByTestId(`${testId}-cell-row-2-col-inactive`),
     ).toHaveTextContent("true");
 
     const editButton = screen.getByTestId(
@@ -171,13 +186,13 @@ describe("UCSBOrganizationTable tests", () => {
       screen.getByTestId(`${testId}-cell-row-0-col-orgCode`),
     ).toHaveTextContent("GG");
     expect(
-        screen.getByTestId(`${testId}-cell-row-0-col-orgTranslationShort`),
+      screen.getByTestId(`${testId}-cell-row-0-col-orgTranslationShort`),
     ).toHaveTextContent("Gaucho Gaming");
     expect(
-        screen.getByTestId(`${testId}-cell-row-0-col-orgTranslation`),
+      screen.getByTestId(`${testId}-cell-row-0-col-orgTranslation`),
     ).toHaveTextContent("UCSB Gaucho Gaming");
     expect(
-        screen.getByTestId(`${testId}-cell-row-0-col-inactive`),
+      screen.getByTestId(`${testId}-cell-row-0-col-inactive`),
     ).toHaveTextContent("false");
 
     expect(screen.getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent(
@@ -187,13 +202,13 @@ describe("UCSBOrganizationTable tests", () => {
       screen.getByTestId(`${testId}-cell-row-1-col-orgCode`),
     ).toHaveTextContent("TTG");
     expect(
-        screen.getByTestId(`${testId}-cell-row-1-col-orgTranslationShort`),
+      screen.getByTestId(`${testId}-cell-row-1-col-orgTranslationShort`),
     ).toHaveTextContent("TTG@UCSB");
     expect(
-        screen.getByTestId(`${testId}-cell-row-1-col-orgTranslation`),
+      screen.getByTestId(`${testId}-cell-row-1-col-orgTranslation`),
     ).toHaveTextContent("UCSB Tabletop Gaming");
     expect(
-        screen.getByTestId(`${testId}-cell-row-1-col-inactive`),
+      screen.getByTestId(`${testId}-cell-row-1-col-inactive`),
     ).toHaveTextContent("false");
     expect(screen.getByTestId(`${testId}-cell-row-2-col-id`)).toHaveTextContent(
       "3",
@@ -202,13 +217,13 @@ describe("UCSBOrganizationTable tests", () => {
       screen.getByTestId(`${testId}-cell-row-2-col-orgCode`),
     ).toHaveTextContent("CIA");
     expect(
-        screen.getByTestId(`${testId}-cell-row-2-col-orgTranslationShort`),
+      screen.getByTestId(`${testId}-cell-row-2-col-orgTranslationShort`),
     ).toHaveTextContent("Central Intelligence Agency");
     expect(
-        screen.getByTestId(`${testId}-cell-row-2-col-orgTranslation`),
+      screen.getByTestId(`${testId}-cell-row-2-col-orgTranslation`),
     ).toHaveTextContent("Central Intelligence Agency");
     expect(
-        screen.getByTestId(`${testId}-cell-row-2-col-inactive`),
+      screen.getByTestId(`${testId}-cell-row-2-col-inactive`),
     ).toHaveTextContent("true");
 
     expect(screen.queryByText("Delete")).not.toBeInTheDocument();

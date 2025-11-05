@@ -1,5 +1,5 @@
 import React from "react";
-import { useBackend } from "main/utils/useBackend"; 
+import { useBackend } from "main/utils/useBackend";
 
 import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
 import MenuItemReviewTable from "main/components/MenuItemReview/MenuItemReviewTable";
@@ -40,7 +40,10 @@ export default function MenuItemReviewIndexPage() {
       <div className="pt-2">
         {createButton()}
         <h1>Reviews</h1>
-        <MenuItemReviewTable reviews={menuItemReviews} currentUser={currentUser} />
+        <MenuItemReviewTable
+          reviews={menuItemReviews}
+          currentUser={currentUser}
+        />
       </div>
     </BasicLayout>
   );

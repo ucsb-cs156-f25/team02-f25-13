@@ -94,7 +94,6 @@ describe("MenuItemReviewCreatePage tests", () => {
     const starsInput = screen.getByLabelText("Stars (0-5)");
     expect(starsInput).toBeInTheDocument();
 
-
     const dateInput = screen.getByLabelText("Date Reviewed (iso format)");
     expect(dateInput).toBeInTheDocument();
 
