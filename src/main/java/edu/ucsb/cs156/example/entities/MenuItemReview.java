@@ -4,7 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-// <-- Need this import
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,6 +25,8 @@ public class MenuItemReview {
   private Long itemId;
   private String reviewerEmail;
 
+  @Min(value = 1, message = "Stars must be between 1 and 5")
+  @Max(value = 5, message = "Stars must be between 1 and 5")
   private int stars;
 
   private LocalDateTime dateReviewed;

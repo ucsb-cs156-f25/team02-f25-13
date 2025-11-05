@@ -14,12 +14,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 /** This is a REST controller for MenuItemReviews */
@@ -64,6 +66,9 @@ public class MenuItemReviewController extends ApiController {
           @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
           LocalDateTime dateReviewed)
       throws JsonProcessingException {
+    if (stars < 1 || stars > 5) {
+      throw new IllegalArgumentException("Stars must be between 1 and 5");
+    }
 
     // For an explanation of @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     // See: https://www.baeldung.com/spring-date-parameters
@@ -146,5 +151,11 @@ public class MenuItemReviewController extends ApiController {
 
     menuItemReviewRepository.delete(menuItemReview);
     return genericMessage("MenuItemReview with id %s deleted".formatted(id));
+  }
+
+  @ExceptionHandler(IllegalArgumentException.class)
+  @ResponseStatus(org.springframework.http.HttpStatus.BAD_REQUEST)
+  public java.util.Map<String, String> handleIllegalArgumentException(IllegalArgumentException ex) {
+    return java.util.Map.of("message", ex.getMessage());
   }
 }
