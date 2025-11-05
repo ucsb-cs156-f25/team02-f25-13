@@ -120,12 +120,11 @@ describe("HelpRequestForm tests", () => {
       expect(screen.getByText(/Max length 255 characters/)).toBeInTheDocument();
     });
     await waitFor(() => {
-      expect(
-        screen.getByText(/Value must be 'true' or 'false'/),
-      ).toBeInTheDocument();
+      expect(screen.getByText(/Value must be 'true' or 'false'/)).toBeInTheDocument();
     });
   });
-
+  
+  
   describe("HelpRequestForm solved validation", () => {
     const setup = () => {
       // no jest.fn here; just a no-op callback
@@ -135,7 +134,7 @@ describe("HelpRequestForm tests", () => {
           <Router>
             <HelpRequestForm submitAction={onSubmit} />
           </Router>
-        </QueryClientProvider>,
+        </QueryClientProvider>
       );
 
       const solvedInput = screen.getByLabelText(/solved/i);
@@ -153,7 +152,7 @@ describe("HelpRequestForm tests", () => {
       await user.click(submitButton);
 
       expect(
-        await screen.findByText("Value must be 'true' or 'false'"),
+        await screen.findByText("Value must be 'true' or 'false'")
       ).toBeInTheDocument();
     });
 
@@ -167,7 +166,7 @@ describe("HelpRequestForm tests", () => {
 
       await waitFor(() => {
         expect(
-          screen.queryByText("Value must be 'true' or 'false'"),
+          screen.queryByText("Value must be 'true' or 'false'")
         ).not.toBeInTheDocument();
       });
     });
@@ -182,7 +181,7 @@ describe("HelpRequestForm tests", () => {
 
       await waitFor(() => {
         expect(
-          screen.queryByText("Value must be 'true' or 'false'"),
+          screen.queryByText("Value must be 'true' or 'false'")
         ).not.toBeInTheDocument();
       });
     });
