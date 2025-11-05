@@ -126,7 +126,6 @@ describe("MenuItemReviewForm tests", () => {
       expect(screen.getByText(/Max length 255 characters/)).toBeInTheDocument();
     });
   });
-  
 
   test("form contains all expected input fields", async () => {
     render(
@@ -134,7 +133,7 @@ describe("MenuItemReviewForm tests", () => {
         <Router>
           <MenuItemReviewForm />
         </Router>
-      </QueryClientProvider>
+      </QueryClientProvider>,
     );
 
     const testId = "MenuItemReviewForm";
@@ -153,7 +152,7 @@ describe("MenuItemReviewForm tests", () => {
         <Router>
           <MenuItemReviewForm />
         </Router>
-      </QueryClientProvider>
+      </QueryClientProvider>,
     );
 
     const testId = "MenuItemReviewForm";
@@ -164,93 +163,116 @@ describe("MenuItemReviewForm tests", () => {
     fireEvent.click(submitButton);
 
     await waitFor(() => {
-      expect(screen.getByText((content) =>
-        content.includes("Must be a valid email address")
-      )).toBeInTheDocument();
+      expect(
+        screen.getByText((content) =>
+          content.includes("Must be a valid email address"),
+        ),
+      ).toBeInTheDocument();
     });
   });
 
-test("displays error when invalid email format is entered", async () => {
-  render(
-    <QueryClientProvider client={queryClient}>
-      <Router>
-        <MenuItemReviewForm />
-      </Router>
-    </QueryClientProvider>,
-  );
+  test("displays error when invalid email format is entered", async () => {
+    render(
+      <QueryClientProvider client={queryClient}>
+        <Router>
+          <MenuItemReviewForm />
+        </Router>
+      </QueryClientProvider>,
+    );
 
-  const submitButton = await screen.findByText(/Create/);
-  const reviewerEmailInput = screen.getByTestId("MenuItemReviewForm-reviewerEmail");
+    const submitButton = await screen.findByText(/Create/);
+    const reviewerEmailInput = screen.getByTestId(
+      "MenuItemReviewForm-reviewerEmail",
+    );
 
-  // ❌ Invalid emails that should fail regex
-  fireEvent.change(reviewerEmailInput, { target: { value: "invalidemail" } });
-  await waitFor(() => expect(reviewerEmailInput.value).toBe("invalidemail"));
-  fireEvent.click(submitButton);
+    // ❌ Invalid emails that should fail regex
+    fireEvent.change(reviewerEmailInput, { target: { value: "invalidemail" } });
+    await waitFor(() => expect(reviewerEmailInput.value).toBe("invalidemail"));
+    fireEvent.click(submitButton);
 
-  await waitFor(() => {
-    expect(screen.getByText(/Must be a valid email address/i)).toBeInTheDocument();
+    await waitFor(() => {
+      expect(
+        screen.getByText(/Must be a valid email address/i),
+      ).toBeInTheDocument();
+    });
+
+    // ✅ Valid email that should pass regex
+    fireEvent.change(reviewerEmailInput, {
+      target: { value: "test@example.com" },
+    });
+    fireEvent.click(submitButton);
+
+    // Should remove the invalid email message
+    await waitFor(() => {
+      expect(
+        screen.queryByText(/Must be a valid email address/i),
+      ).not.toBeInTheDocument();
+    });
   });
 
-  // ✅ Valid email that should pass regex
-  fireEvent.change(reviewerEmailInput, { target: { value: "test@example.com" } });
-  fireEvent.click(submitButton);
+  test("shows error when email has extra text before or after", async () => {
+    render(
+      <QueryClientProvider client={queryClient}>
+        <Router>
+          <MenuItemReviewForm />
+        </Router>
+      </QueryClientProvider>,
+    );
 
-  // Should remove the invalid email message
-  await waitFor(() => {
-    expect(screen.queryByText(/Must be a valid email address/i)).not.toBeInTheDocument();
+    const submitButton = await screen.findByText(/Create/);
+    const reviewerEmailInput = screen.getByTestId(
+      "MenuItemReviewForm-reviewerEmail",
+    );
+
+    // ❌ Email with leading text
+    fireEvent.change(reviewerEmailInput, {
+      target: { value: "hello test@example.com" },
+    });
+    fireEvent.click(submitButton);
+
+    await waitFor(() => {
+      expect(
+        screen.getByText(/Must be a valid email address/i),
+      ).toBeInTheDocument();
+    });
+
+    // ❌ Email with trailing text
+    fireEvent.change(reviewerEmailInput, {
+      target: { value: "test@example.com goodbye" },
+    });
+    fireEvent.click(submitButton);
+
+    await waitFor(() => {
+      expect(
+        screen.getByText(/Must be a valid email address/i),
+      ).toBeInTheDocument();
+    });
   });
-});
 
+  test("shows error when email has trailing characters with no space", async () => {
+    render(
+      <QueryClientProvider client={queryClient}>
+        <Router>
+          <MenuItemReviewForm />
+        </Router>
+      </QueryClientProvider>,
+    );
 
-test("shows error when email has extra text before or after", async () => {
-  render(
-    <QueryClientProvider client={queryClient}>
-      <Router>
-        <MenuItemReviewForm />
-      </Router>
-    </QueryClientProvider>
-  );
+    const submitButton = await screen.findByText(/Create/);
+    const reviewerEmailInput = screen.getByTestId(
+      "MenuItemReviewForm-reviewerEmail",
+    );
 
-  const submitButton = await screen.findByText(/Create/);
-  const reviewerEmailInput = screen.getByTestId("MenuItemReviewForm-reviewerEmail");
+    // ❌ Email with extra characters after valid email (no space)
+    fireEvent.change(reviewerEmailInput, {
+      target: { value: "test@example.comabc" },
+    });
+    fireEvent.click(submitButton);
 
-  // ❌ Email with leading text
-  fireEvent.change(reviewerEmailInput, { target: { value: "hello test@example.com" } });
-  fireEvent.click(submitButton);
-
-  await waitFor(() => {
-    expect(screen.getByText(/Must be a valid email address/i)).toBeInTheDocument();
+    await waitFor(() => {
+      expect(
+        screen.getByText(/Must be a valid email address/i),
+      ).toBeInTheDocument();
+    });
   });
-
-  // ❌ Email with trailing text
-  fireEvent.change(reviewerEmailInput, { target: { value: "test@example.com goodbye" } });
-  fireEvent.click(submitButton);
-
-  await waitFor(() => {
-    expect(screen.getByText(/Must be a valid email address/i)).toBeInTheDocument();
-  });
-});
-
-test("shows error when email has trailing characters with no space", async () => {
-  render(
-    <QueryClientProvider client={queryClient}>
-      <Router>
-        <MenuItemReviewForm />
-      </Router>
-    </QueryClientProvider>
-  );
-
-  const submitButton = await screen.findByText(/Create/);
-  const reviewerEmailInput = screen.getByTestId("MenuItemReviewForm-reviewerEmail");
-
-  // ❌ Email with extra characters after valid email (no space)
-  fireEvent.change(reviewerEmailInput, { target: { value: "test@example.comabc" } });
-  fireEvent.click(submitButton);
-
-  await waitFor(() => {
-    expect(screen.getByText(/Must be a valid email address/i)).toBeInTheDocument();
-  });
-});
-
-
 });
