@@ -68,7 +68,9 @@ describe("HelpRequestEditPage tests", () => {
         </QueryClientProvider>,
       );
       await screen.findByText("Edit HelpRequest");
-      expect(screen.queryByTestId("HelpRequest-requesterEmail")).not.toBeInTheDocument();
+      expect(
+        screen.queryByTestId("HelpRequest-requesterEmail"),
+      ).not.toBeInTheDocument();
       restoreConsole();
     });
   });
@@ -150,6 +152,8 @@ describe("HelpRequestEditPage tests", () => {
       const solvedField = screen.getByTestId("HelpRequestForm-solved");
 
       const submitButton = screen.getByTestId("HelpRequestForm-submit");
+
+      expect(submitButton).toHaveTextContent(/update/i);
 
       expect(requesterEmailField).toHaveValue("hao_ding@ucsb.edu");
       expect(teamIdField).toHaveValue("13");
