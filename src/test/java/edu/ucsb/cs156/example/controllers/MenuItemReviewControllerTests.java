@@ -70,6 +70,104 @@ public class MenuItemReviewControllerTests extends ControllerTestCase {
         .andExpect(status().is(403)); // only admins can post
   }
 
+  @WithMockUser(roles = {"ADMIN", "USER"})
+  @Test
+  public void an_admin_user_can_post_a_new_menuitemreview_with_star_1() throws Exception {
+    // arrange
+    LocalDateTime date = LocalDateTime.now();
+
+    // act
+    MvcResult response =
+        mockMvc
+            .perform(
+                post("/api/menuitemreviews/post")
+                    .param("itemId", "1")
+                    .param("reviewerEmail", "test@example.com")
+                    .param("stars", "1")
+                    .param("comments", "Edge case test")
+                    .param("dateReviewed", date.toString())
+                    .with(csrf()))
+            .andExpect(status().isOk())
+            .andReturn();
+
+    // assert
+    verify(menuItemReviewRepository, times(1)).save(any(MenuItemReview.class));
+  }
+
+  @WithMockUser(roles = {"ADMIN", "USER"})
+  @Test
+  public void an_admin_user_can_post_a_new_menuitemreview_with_star_5() throws Exception {
+    // arrange
+    LocalDateTime date = LocalDateTime.now();
+
+    // act
+    MvcResult response =
+        mockMvc
+            .perform(
+                post("/api/menuitemreviews/post")
+                    .param("itemId", "1")
+                    .param("reviewerEmail", "test@example.com")
+                    .param("stars", "5")
+                    .param("comments", "Edge case test")
+                    .param("dateReviewed", date.toString())
+                    .with(csrf()))
+            .andExpect(status().isOk())
+            .andReturn();
+
+    // assert
+    verify(menuItemReviewRepository, times(1)).save(any(MenuItemReview.class));
+  }
+
+  @WithMockUser(roles = {"ADMIN", "USER"})
+  @Test
+  public void admin_user_cannot_post_with_invalid_star_rating() throws Exception {
+    // arrange
+    LocalDateTime date = LocalDateTime.now();
+
+    // act
+    MvcResult response =
+        mockMvc
+            .perform(
+                post("/api/menuitemreviews/post")
+                    .param("itemId", "1")
+                    .param("reviewerEmail", "test@example.com")
+                    .param("stars", "6") // invalid stars
+                    .param("comments", "Invalid star test")
+                    .param("dateReviewed", date.toString())
+                    .with(csrf()))
+            .andExpect(status().isBadRequest()) // or whatever exception mapping you have
+            .andReturn();
+
+    // optional: assert that message is correct
+    String responseString = response.getResponse().getContentAsString();
+    assert (responseString.contains("Stars must be between 1 and 5"));
+  }
+
+  @WithMockUser(roles = {"ADMIN", "USER"})
+  @Test
+  public void admin_user_cannot_post_with_star_rating_below_1() throws Exception {
+    // arrange
+    LocalDateTime date = LocalDateTime.now();
+
+    // act
+    MvcResult response =
+        mockMvc
+            .perform(
+                post("/api/menuitemreviews/post")
+                    .param("itemId", "1")
+                    .param("reviewerEmail", "test@example.com")
+                    .param("stars", "0") // <-- less than 1
+                    .param("comments", "Invalid low star test")
+                    .param("dateReviewed", date.toString())
+                    .with(csrf()))
+            .andExpect(status().isBadRequest())
+            .andReturn();
+
+    // assert
+    String responseString = response.getResponse().getContentAsString();
+    assert (responseString.contains("Stars must be between 1 and 5"));
+  }
+
   @WithMockUser(roles = {"USER"})
   @Test
   public void logged_in_user_can_get_all_menuitemreviews() throws Exception {
