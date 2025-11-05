@@ -70,7 +70,10 @@ export default function UCSBOrganizationEditPage({ storybook = false }) {
           <UCSBOrganizationForm
             submitAction={onSubmit}
             buttonLabel={"Update"}
-            initialContents={organization}
+            initialContents={{
+              ...organization,
+              inactive: organization.inactive === true ? "true" : "false",
+            }}
           />
         )}
       </div>

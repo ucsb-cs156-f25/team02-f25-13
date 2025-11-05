@@ -208,5 +208,59 @@ describe("UCSBOrganizationEditPage tests", () => {
       );
       expect(mockNavigate).toBeCalledWith({ to: "/ucsborganization" });
     });
+    test("Shows inactive=false when backend returns false", async () => {
+      // Override the default GET stub just for this test
+      axiosMock.onGet("/api/ucsborganization", { params: { orgCode: "AS" } }).reply(200, {
+        orgCode: "AS",
+        orgTranslationShort: "AS",
+        orgTranslation: "Associated Students",
+        inactive: false,
+      });
+
+      const localClient = new QueryClient({
+        defaultOptions: {
+          queries: { retry: false },
+        },
+      });
+      render(
+        <QueryClientProvider client={localClient}>
+          <MemoryRouter>
+            <UCSBOrganizationEditPage />
+          </MemoryRouter>
+        </QueryClientProvider>,
+      );
+
+      await screen.findByTestId("UCSBOrganizationForm-inactive");
+
+      const inactiveField = screen.getByTestId("UCSBOrganizationForm-inactive");
+      expect(inactiveField).toHaveValue("false");
+    });
+    test("Shows inactive=true when backend returns true", async () => {
+      // Override the default GET stub just for this test
+      axiosMock.onGet("/api/ucsborganization", { params: { orgCode: "AS" } }).reply(200, {
+        orgCode: "AS",
+        orgTranslationShort: "AS",
+        orgTranslation: "Associated Students",
+        inactive: true,
+      });
+      const localClient = new QueryClient({
+        defaultOptions: {
+          queries: { retry: false },
+        },
+      });
+
+      render(
+        <QueryClientProvider client={localClient}>
+          <MemoryRouter>
+            <UCSBOrganizationEditPage />
+          </MemoryRouter>
+        </QueryClientProvider>,
+      );
+
+      await screen.findByTestId("UCSBOrganizationForm-inactive");
+
+      const inactiveField = screen.getByTestId("UCSBOrganizationForm-inactive");
+      expect(inactiveField).toHaveValue("true");
+    });
   });
 });
