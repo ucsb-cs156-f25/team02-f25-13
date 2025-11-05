@@ -42,7 +42,7 @@ describe("menuItemReviewUtils", () => {
 
       // assert
       expect(result).toEqual({
-        url: "/api/MenuItemReview",
+        url: "/api/menuitemreviews",
         method: "DELETE",
         params: { id: 42 },
       });
