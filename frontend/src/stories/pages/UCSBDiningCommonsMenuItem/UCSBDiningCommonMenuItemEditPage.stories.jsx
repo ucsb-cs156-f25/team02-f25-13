@@ -1,17 +1,17 @@
 import React from "react";
 import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
 import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
-import { ucsbDatesFixtures } from "fixtures/ucsbDatesFixtures";
+import { ucsbDiningCommonsMenuItemFixtures } from "fixtures/ucsbDiningCommonsMenuItemFixtures";
 import { http, HttpResponse } from "msw";
 
-import UCSBDatesEditPage from "main/pages/UCSBDates/UCSBDatesEditPage";
+import UCSBDiningCommonsMenuItemEditPage from "main/pages/UCSBDiningCommonsMenuItem/UCSBDiningCommonsMenuItemEditPage";
 
 export default {
-  title: "pages/UCSBDates/UCSBDatesEditPage",
-  component: UCSBDatesEditPage,
+  title: "pages/UCSBDiningCommonsMenuItem/UCSBDiningCommonsMenuItemEditPage",
+  component: UCSBDiningCommonsMenuItemEditPage,
 };
 
-const Template = () => <UCSBDatesEditPage storybook={true} />;
+const Template = () => <UCSBDiningCommonsMenuItemEditPage storybook={true} />;
 
 export const Default = Template.bind({});
 Default.parameters = {
@@ -26,12 +26,15 @@ Default.parameters = {
         status: 200,
       });
     }),
-    http.get("/api/ucsbdates", () => {
-      return HttpResponse.json(ucsbDatesFixtures.threeDates[0], {
-        status: 200,
-      });
+    http.get("/api/ucsbdiningcommonsmenuitem", () => {
+      return HttpResponse.json(
+        ucsbDiningCommonsMenuItemFixtures.threeUCSBDiningCommonsMenuItems[0],
+        {
+          status: 200,
+        },
+      );
     }),
-    http.put("/api/ucsbdates", () => {
+    http.put("/api/ucsbdiningcommonsmenuitem", () => {
       return HttpResponse.json({}, { status: 200 });
     }),
   ],
