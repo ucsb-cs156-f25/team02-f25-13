@@ -72,7 +72,10 @@ export default function HelpRequestEditPage({ storybook = false }) {
           <HelpRequestForm
             submitAction={onSubmit}
             buttonLabel={"Update"}
-            initialContents={helpRequest}
+            initialContents={{
+              ...helpRequest,
+              solved: helpRequest.solved === true ? "true" : "false",
+            }}
           />
         )}
       </div>

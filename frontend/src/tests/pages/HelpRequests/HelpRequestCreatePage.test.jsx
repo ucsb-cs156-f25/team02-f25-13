@@ -69,7 +69,7 @@ describe("HelpRequestCreatePage tests", () => {
       tableOrBreakoutRoom: "2",
       requestTime: "2013-06-16T23:55",
       explanation: "Mvn clean install is not working!!!",
-      solved: true,
+      solved: "true",
     };
 
     axiosMock.onPost("/api/help_requests/post").reply(202, helpRequest);
