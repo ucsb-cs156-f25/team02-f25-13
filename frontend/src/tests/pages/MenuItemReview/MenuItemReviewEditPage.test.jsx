@@ -52,7 +52,7 @@ describe("MenuItemReviewEditPage tests", () => {
       .reply(200, systemInfoFixtures.showingNeither);
   };
   
-  const setupAdminUser = () => {
+  /*const setupAdminUser = () => {
     axiosMock.reset();
     axiosMock.resetHistory();
     axiosMock
@@ -61,7 +61,7 @@ describe("MenuItemReviewEditPage tests", () => {
     axiosMock
       .onGet("/api/systemInfo")
       .reply(200, systemInfoFixtures.showingNeither);
-  };
+  };*/
   // --- End Setup functions ---
 
   // --- 1. Test when backend fails to return data ---
