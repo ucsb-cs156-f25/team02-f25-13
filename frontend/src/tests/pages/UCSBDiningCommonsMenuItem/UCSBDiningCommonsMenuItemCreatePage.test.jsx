@@ -83,7 +83,7 @@ describe("UCSBDiningCommonsMenuItemCreatePage tests", () => {
 
     await waitFor(() => {
       expect(
-        screen.getByTestId("UCSBDiningCommonsMenuItemForm-name"),
+        screen.getByTestId("UCSBDiningCommonsMenuItemForm-diningCommonsCode"),
       ).toBeInTheDocument();
     });
 
