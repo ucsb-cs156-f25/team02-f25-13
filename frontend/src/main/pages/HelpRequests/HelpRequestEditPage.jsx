@@ -64,7 +64,6 @@ export default function HelpRequestEditPage({ storybook = false }) {
     return <Navigate to="/help_requests" />;
   }
 
-
   return (
     <BasicLayout>
       <div className="pt-2">
@@ -74,12 +73,9 @@ export default function HelpRequestEditPage({ storybook = false }) {
             submitAction={onSubmit}
             buttonLabel={"Update"}
             initialContents={{
-      ...helpRequest,
-      solved:
-        helpRequest.solved === true || helpRequest.solved === "true"
-          ? "true"
-          : "false",
-    }}
+              ...helpRequest,
+              solved: helpRequest.solved === true ? "true" : "false",
+            }}
           />
         )}
       </div>

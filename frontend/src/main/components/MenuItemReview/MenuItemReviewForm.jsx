@@ -12,7 +12,7 @@ function MenuItemReviewForm({
     register,
     formState: { errors },
     handleSubmit,
-  } = useForm({ defaultValues: initialContents || {}, mode: "onChange", });
+  } = useForm({ defaultValues: initialContents || {}, mode: "onChange" });
   // Stryker restore all
 
   const navigate = useNavigate();
