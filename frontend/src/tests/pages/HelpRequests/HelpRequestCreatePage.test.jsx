@@ -88,21 +88,29 @@ describe("HelpRequestCreatePage tests", () => {
       ).toBeInTheDocument();
     });
 
-    const requesterEmailField = screen.getByTestId("HelpRequestForm-requesterEmail");
+    const requesterEmailField = screen.getByTestId(
+      "HelpRequestForm-requesterEmail",
+    );
     const teamIdField = screen.getByLabelText("TeamId");
-    const tableOrBreakoutRoomField = screen.getByLabelText("TableOrBreakoutRoom");
+    const tableOrBreakoutRoomField = screen.getByLabelText(
+      "TableOrBreakoutRoom",
+    );
     const requestTimeField = screen.getByLabelText("RequestTime");
     const explanationField = screen.getByLabelText("Explanation");
     const solvedField = screen.getByTestId("HelpRequestForm-solved");
 
     const submitButton = screen.getByRole("button", { name: /Create/i });
 
-    fireEvent.change(requesterEmailField, { target: { value: "zhangchi@ucsb.edu" } });
+    fireEvent.change(requesterEmailField, {
+      target: { value: "zhangchi@ucsb.edu" },
+    });
     fireEvent.change(teamIdField, { target: { value: "13" } });
     fireEvent.change(tableOrBreakoutRoomField, {
       target: { value: "13" },
     });
-    fireEvent.change(requestTimeField, { target: { value: "2013-06-16T23:55" } });
+    fireEvent.change(requestTimeField, {
+      target: { value: "2013-06-16T23:55" },
+    });
     fireEvent.change(explanationField, { target: { value: "Please help!" } });
     fireEvent.change(solvedField, { target: { value: "true" } });
 
