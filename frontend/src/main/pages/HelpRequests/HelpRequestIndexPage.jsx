@@ -7,10 +7,10 @@ export default function HelpRequestIndexPage() {
       <div className="pt-2">
         <h1>Index page not yet implemented</h1>
         <p>
-          <a href="/helprequests/create">Create</a>
+          <a href="/help_requests/create">Create</a>
         </p>
         <p>
-          <a href="/helprequests/edit/1">Edit</a>
+          <a href="/help_requests/edit/1">Edit</a>
         </p>
       </div>
     </BasicLayout>

@@ -95,7 +95,7 @@ function App() {
         <>
           <Route
             exact
-            path="/helprequests"
+            path="/help_requests"
             element={<HelpRequestIndexPage />}
           />
         </>
@@ -104,12 +104,12 @@ function App() {
         <>
           <Route
             exact
-            path="/helprequests/edit/:id"
+            path="/help_requests/edit/:id"
             element={<HelpRequestEditPage />}
           />
           <Route
             exact
-            path="/helprequests/create"
+            path="/help_requests/create"
             element={<HelpRequestCreatePage />}
           />
         </>
