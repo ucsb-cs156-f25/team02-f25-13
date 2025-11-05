@@ -9,24 +9,26 @@ import {
 import { useNavigate } from "react-router";
 import { hasRole } from "main/utils/useCurrentUser";
 export default function UCSBOrganizationTable({
-    ucsbOrganizations,
-    currentUser,
-    testIdPrefix = "UCSBOrganizationTable",
+  ucsbOrganizations,
+  currentUser,
+  testIdPrefix = "UCSBOrganizationTable",
 }) {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    const editCallback = (cell) => {
-        navigate(`/ucsborganization/edit/${cell.row.original.orgCode}`);
-    };
+  const editCallback = (cell) => {
+    navigate(`/ucsborganization/edit/${cell.row.original.orgCode}`);
+  };
 
-    // Stryker disable all : hard to test for query caching
+  // Stryker disable all : hard to test for query caching
 
-    const deleteMutation = useBackendMutation(
-        cellToAxiosParamsDelete,
-        { onSuccess: onDeleteSuccess },
-        ["/api/ucsborganization/all"],
-    );
-    // Stryker restore all
+  const deleteMutation = useBackendMutation(
+    cellToAxiosParamsDelete,
+    { onSuccess: onDeleteSuccess },
+    ["/api/ucsborganization/all"],
+  );
+  // Stryker restore all
+
+  // Stryker disable next-line all : TODO try to make a good test for this
 
     // Stryker disable next-line all : TODO try to make a good test for this
     const deleteCallback = async (cell) => {
