@@ -14,28 +14,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 /** This is a REST controller for MenuItemReviews */
 @Tag(name = &quot;MenuItemReviews&quot;)
 @RequestMapping(&quot;/api/menuitemreviews&quot;)
 @RestController
-<span class="fc" id="L29">@Slf4j</span>
-<span class="fc" id="L30">public class MenuItemReviewController extends ApiController {</span>
+<span class="fc" id="L31">@Slf4j</span>
+<span class="fc" id="L32">public class MenuItemReviewController extends ApiController {</span>
   @Autowired MenuItemReviewRepository menuItemReviewRepository;
 
   @Operation(summary = &quot;List all menu review items&quot;)
   @PreAuthorize(&quot;hasRole('ROLE_USER')&quot;)
   @GetMapping(&quot;/all&quot;)
   public Iterable&lt;MenuItemReview&gt; allMenuItemReviews() {
-<span class="fc" id="L37">    Iterable&lt;MenuItemReview&gt; reviews = menuItemReviewRepository.findAll();</span>
-<span class="fc" id="L38">    return reviews;</span>
+<span class="fc" id="L39">    Iterable&lt;MenuItemReview&gt; reviews = menuItemReviewRepository.findAll();</span>
+<span class="fc" id="L40">    return reviews;</span>
   }
 
   /**
@@ -64,22 +66,25 @@ import org.springframework.web.bind.annotation.RestController;
           @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
           LocalDateTime dateReviewed)
       throws JsonProcessingException {
+<span class="fc bfc" id="L69" title="All 4 branches covered.">    if (stars &lt; 1 || stars &gt; 5) {</span>
+<span class="fc" id="L70">      throw new IllegalArgumentException(&quot;Stars must be between 1 and 5&quot;);</span>
+    }
 
     // For an explanation of @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     // See: https://www.baeldung.com/spring-date-parameters
 
-<span class="fc" id="L71">    log.info(&quot;dateReviewed={}&quot;, dateReviewed);</span>
+<span class="fc" id="L76">    log.info(&quot;dateReviewed={}&quot;, dateReviewed);</span>
 
-<span class="fc" id="L73">    MenuItemReview review = new MenuItemReview();</span>
-<span class="fc" id="L74">    review.setItemId(itemId);</span>
-<span class="fc" id="L75">    review.setReviewerEmail(reviewerEmail);</span>
-<span class="fc" id="L76">    review.setStars(stars);</span>
-<span class="fc" id="L77">    review.setDateReviewed(dateReviewed);</span>
-<span class="fc" id="L78">    review.setComments(comments);</span>
+<span class="fc" id="L78">    MenuItemReview review = new MenuItemReview();</span>
+<span class="fc" id="L79">    review.setItemId(itemId);</span>
+<span class="fc" id="L80">    review.setReviewerEmail(reviewerEmail);</span>
+<span class="fc" id="L81">    review.setStars(stars);</span>
+<span class="fc" id="L82">    review.setDateReviewed(dateReviewed);</span>
+<span class="fc" id="L83">    review.setComments(comments);</span>
 
-<span class="fc" id="L80">    MenuItemReview savedReview = menuItemReviewRepository.save(review);</span>
+<span class="fc" id="L85">    MenuItemReview savedReview = menuItemReviewRepository.save(review);</span>
 
-<span class="fc" id="L82">    return savedReview;</span>
+<span class="fc" id="L87">    return savedReview;</span>
   }
 
   /**
@@ -92,12 +97,12 @@ import org.springframework.web.bind.annotation.RestController;
   @PreAuthorize(&quot;hasRole('ROLE_USER')&quot;)
   @GetMapping(&quot;&quot;)
   public MenuItemReview getById(@Parameter(name = &quot;id&quot;) @RequestParam Long id) {
-<span class="fc" id="L95">    MenuItemReview menuItemReview =</span>
+<span class="fc" id="L100">    MenuItemReview menuItemReview =</span>
         menuItemReviewRepository
-<span class="fc" id="L97">            .findById(id)</span>
-<span class="fc" id="L98">            .orElseThrow(() -&gt; new EntityNotFoundException(MenuItemReview.class, id));</span>
+<span class="fc" id="L102">            .findById(id)</span>
+<span class="fc" id="L103">            .orElseThrow(() -&gt; new EntityNotFoundException(MenuItemReview.class, id));</span>
 
-<span class="fc" id="L100">    return menuItemReview;</span>
+<span class="fc" id="L105">    return menuItemReview;</span>
   }
 
   /**
@@ -113,20 +118,20 @@ import org.springframework.web.bind.annotation.RestController;
   public MenuItemReview updateMenuItemReview(
       @Parameter(name = &quot;id&quot;) @RequestParam Long id, @RequestBody @Valid MenuItemReview incoming) {
 
-<span class="fc" id="L116">    MenuItemReview menuItemReview =</span>
+<span class="fc" id="L121">    MenuItemReview menuItemReview =</span>
         menuItemReviewRepository
-<span class="fc" id="L118">            .findById(id)</span>
-<span class="fc" id="L119">            .orElseThrow(() -&gt; new EntityNotFoundException(MenuItemReview.class, id));</span>
+<span class="fc" id="L123">            .findById(id)</span>
+<span class="fc" id="L124">            .orElseThrow(() -&gt; new EntityNotFoundException(MenuItemReview.class, id));</span>
 
-<span class="fc" id="L121">    menuItemReview.setItemId(incoming.getItemId());</span>
-<span class="fc" id="L122">    menuItemReview.setReviewerEmail(incoming.getReviewerEmail());</span>
-<span class="fc" id="L123">    menuItemReview.setStars(incoming.getStars());</span>
-<span class="fc" id="L124">    menuItemReview.setDateReviewed(incoming.getDateReviewed());</span>
-<span class="fc" id="L125">    menuItemReview.setComments(incoming.getComments());</span>
+<span class="fc" id="L126">    menuItemReview.setItemId(incoming.getItemId());</span>
+<span class="fc" id="L127">    menuItemReview.setReviewerEmail(incoming.getReviewerEmail());</span>
+<span class="fc" id="L128">    menuItemReview.setStars(incoming.getStars());</span>
+<span class="fc" id="L129">    menuItemReview.setDateReviewed(incoming.getDateReviewed());</span>
+<span class="fc" id="L130">    menuItemReview.setComments(incoming.getComments());</span>
 
-<span class="fc" id="L127">    menuItemReviewRepository.save(menuItemReview);</span>
+<span class="fc" id="L132">    menuItemReviewRepository.save(menuItemReview);</span>
 
-<span class="fc" id="L129">    return menuItemReview;</span>
+<span class="fc" id="L134">    return menuItemReview;</span>
   }
 
   /**
@@ -139,13 +144,19 @@ import org.springframework.web.bind.annotation.RestController;
   @PreAuthorize(&quot;hasRole('ROLE_ADMIN')&quot;)
   @DeleteMapping(&quot;&quot;)
   public Object deletemenuItemReview(@Parameter(name = &quot;id&quot;) @RequestParam Long id) {
-<span class="fc" id="L142">    MenuItemReview menuItemReview =</span>
+<span class="fc" id="L147">    MenuItemReview menuItemReview =</span>
         menuItemReviewRepository
-<span class="fc" id="L144">            .findById(id)</span>
-<span class="fc" id="L145">            .orElseThrow(() -&gt; new EntityNotFoundException(MenuItemReview.class, id));</span>
+<span class="fc" id="L149">            .findById(id)</span>
+<span class="fc" id="L150">            .orElseThrow(() -&gt; new EntityNotFoundException(MenuItemReview.class, id));</span>
 
-<span class="fc" id="L147">    menuItemReviewRepository.delete(menuItemReview);</span>
-<span class="fc" id="L148">    return genericMessage(&quot;MenuItemReview with id %s deleted&quot;.formatted(id));</span>
+<span class="fc" id="L152">    menuItemReviewRepository.delete(menuItemReview);</span>
+<span class="fc" id="L153">    return genericMessage(&quot;MenuItemReview with id %s deleted&quot;.formatted(id));</span>
+  }
+
+  @ExceptionHandler(IllegalArgumentException.class)
+  @ResponseStatus(org.springframework.http.HttpStatus.BAD_REQUEST)
+  public java.util.Map&lt;String, String&gt; handleIllegalArgumentException(IllegalArgumentException ex) {
+<span class="fc" id="L159">    return java.util.Map.of(&quot;message&quot;, ex.getMessage());</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
