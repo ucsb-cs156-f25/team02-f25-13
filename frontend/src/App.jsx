@@ -19,7 +19,6 @@ import PlaceholderIndexPage from "main/pages/Placeholder/PlaceholderIndexPage";
 import PlaceholderCreatePage from "main/pages/Placeholder/PlaceholderCreatePage";
 import PlaceholderEditPage from "main/pages/Placeholder/PlaceholderEditPage";
 
-
 import { hasRole, useCurrentUser } from "main/utils/useCurrentUser";
 
 import "bootstrap/dist/css/bootstrap.css";
@@ -56,7 +55,11 @@ function App() {
       )}
       {hasRole(currentUser, "ROLE_USER") && (
         <>
-          <Route exact path="/recommendationrequest" element={<RecommendationRequestIndexPage />} />
+          <Route
+            exact
+            path="/recommendationrequest"
+            element={<RecommendationRequestIndexPage />}
+          />
         </>
       )}
       {hasRole(currentUser, "ROLE_ADMIN") && (
@@ -69,7 +72,7 @@ function App() {
           <Route
             exact
             path="/recommendationrequest/create"
-            element={<RecommendationRequestCreatePage/>}
+            element={<RecommendationRequestCreatePage />}
           />
         </>
       )}
