@@ -46,7 +46,9 @@ describe("UCSBOrganizationEditPage tests", () => {
       axiosMock
         .onGet("/api/systemInfo")
         .reply(200, systemInfoFixtures.showingNeither);
-      axiosMock.onGet("/api/ucsborganization", { params: { orgCode: "AS" } }).timeout();
+      axiosMock
+        .onGet("/api/ucsborganization", { params: { orgCode: "AS" } })
+        .timeout();
     });
 
     afterEach(() => {
@@ -68,7 +70,9 @@ describe("UCSBOrganizationEditPage tests", () => {
         </QueryClientProvider>,
       );
       await screen.findByText("Edit UCSB Organization");
-      expect(screen.queryByTestId("UCSBOrganization-orgCode")).not.toBeInTheDocument();
+      expect(
+        screen.queryByTestId("UCSBOrganization-orgCode"),
+      ).not.toBeInTheDocument();
       restoreConsole();
     });
   });
@@ -84,12 +88,14 @@ describe("UCSBOrganizationEditPage tests", () => {
       axiosMock
         .onGet("/api/systemInfo")
         .reply(200, systemInfoFixtures.showingNeither);
-      axiosMock.onGet("/api/ucsborganization", { params: { orgCode: "AS" } }).reply(200, {
-        orgCode: "AS",
-        orgTranslationShort: "AS",
-        orgTranslation: "Associated Students",
-        inactive: false,
-      });
+      axiosMock
+        .onGet("/api/ucsborganization", { params: { orgCode: "AS" } })
+        .reply(200, {
+          orgCode: "AS",
+          orgTranslationShort: "AS",
+          orgTranslation: "Associated Students",
+          inactive: false,
+        });
       axiosMock.onPut("/api/ucsborganization").reply(200, {
         orgCode: "AS",
         orgTranslationShort: "Assoc Stud",
@@ -117,12 +123,18 @@ describe("UCSBOrganizationEditPage tests", () => {
       );
 
       await waitFor(() => {
-        expect(screen.getByTestId("UCSBOrganizationForm-orgCode")).toBeInTheDocument();
+        expect(
+          screen.getByTestId("UCSBOrganizationForm-orgCode"),
+        ).toBeInTheDocument();
       });
 
       const orgCodeField = screen.getByTestId("UCSBOrganizationForm-orgCode");
-      const orgTranslationShortField = screen.getByTestId("UCSBOrganizationForm-orgTranslationShort");
-      const orgTranslationField = screen.getByTestId("UCSBOrganizationForm-orgTranslation");
+      const orgTranslationShortField = screen.getByTestId(
+        "UCSBOrganizationForm-orgTranslationShort",
+      );
+      const orgTranslationField = screen.getByTestId(
+        "UCSBOrganizationForm-orgTranslation",
+      );
       const inactiveField = screen.getByTestId("UCSBOrganizationForm-inactive");
       const submitButton = screen.getByTestId("UCSBOrganizationForm-submit");
 
@@ -182,8 +194,12 @@ describe("UCSBOrganizationEditPage tests", () => {
       await screen.findByTestId("UCSBOrganizationForm-orgCode");
 
       const orgCodeField = screen.getByTestId("UCSBOrganizationForm-orgCode");
-      const orgTranslationShortField = screen.getByTestId("UCSBOrganizationForm-orgTranslationShort");
-      const orgTranslationField = screen.getByTestId("UCSBOrganizationForm-orgTranslation");
+      const orgTranslationShortField = screen.getByTestId(
+        "UCSBOrganizationForm-orgTranslationShort",
+      );
+      const orgTranslationField = screen.getByTestId(
+        "UCSBOrganizationForm-orgTranslation",
+      );
       const inactiveField = screen.getByTestId("UCSBOrganizationForm-inactive");
       const submitButton = screen.getByTestId("UCSBOrganizationForm-submit");
 
@@ -196,8 +212,12 @@ describe("UCSBOrganizationEditPage tests", () => {
       fireEvent.change(orgCodeField, {
         target: { value: "AS" },
       });
-      fireEvent.change(orgTranslationShortField, { target: { value: "Assoc Stud" } });
-      fireEvent.change(orgTranslationField, { target: { value: "Associated Students at UCSB" } });
+      fireEvent.change(orgTranslationShortField, {
+        target: { value: "Assoc Stud" },
+      });
+      fireEvent.change(orgTranslationField, {
+        target: { value: "Associated Students at UCSB" },
+      });
       fireEvent.change(inactiveField, { target: { value: true } });
 
       fireEvent.click(submitButton);
@@ -210,12 +230,14 @@ describe("UCSBOrganizationEditPage tests", () => {
     });
     test("Shows inactive=false when backend returns false", async () => {
       // Override the default GET stub just for this test
-      axiosMock.onGet("/api/ucsborganization", { params: { orgCode: "AS" } }).reply(200, {
-        orgCode: "AS",
-        orgTranslationShort: "AS",
-        orgTranslation: "Associated Students",
-        inactive: false,
-      });
+      axiosMock
+        .onGet("/api/ucsborganization", { params: { orgCode: "AS" } })
+        .reply(200, {
+          orgCode: "AS",
+          orgTranslationShort: "AS",
+          orgTranslation: "Associated Students",
+          inactive: false,
+        });
 
       const localClient = new QueryClient({
         defaultOptions: {
@@ -237,12 +259,14 @@ describe("UCSBOrganizationEditPage tests", () => {
     });
     test("Shows inactive=true when backend returns true", async () => {
       // Override the default GET stub just for this test
-      axiosMock.onGet("/api/ucsborganization", { params: { orgCode: "AS" } }).reply(200, {
-        orgCode: "AS",
-        orgTranslationShort: "AS",
-        orgTranslation: "Associated Students",
-        inactive: true,
-      });
+      axiosMock
+        .onGet("/api/ucsborganization", { params: { orgCode: "AS" } })
+        .reply(200, {
+          orgCode: "AS",
+          orgTranslationShort: "AS",
+          orgTranslation: "Associated Students",
+          inactive: true,
+        });
       const localClient = new QueryClient({
         defaultOptions: {
           queries: { retry: false },

@@ -19,8 +19,18 @@ vi.mock("react-router", async () => {
 describe("UCSBOrganizationTable tests", () => {
   const queryClient = new QueryClient();
 
-  const expectedHeaders = [ "Organization Code", "Organization Translation Short", "Organization Translation", "Inactive"];
-  const expectedFields = [ "orgCode", "orgTranslationShort", "orgTranslation", "inactive"];
+  const expectedHeaders = [
+    "Organization Code",
+    "Organization Translation Short",
+    "Organization Translation",
+    "Inactive",
+  ];
+  const expectedFields = [
+    "orgCode",
+    "orgTranslationShort",
+    "orgTranslation",
+    "inactive",
+  ];
   const testId = "UCSBOrganizationTable";
 
   test("renders empty table correctly", () => {
@@ -158,7 +168,6 @@ describe("UCSBOrganizationTable tests", () => {
       expect(header).toBeInTheDocument();
     });
 
-
     expect(
       screen.getByTestId(`${testId}-cell-row-0-col-orgCode`),
     ).toHaveTextContent("GG");
@@ -171,7 +180,6 @@ describe("UCSBOrganizationTable tests", () => {
     expect(
       screen.getByTestId(`${testId}-cell-row-0-col-inactive`),
     ).toHaveTextContent("false");
-
 
     expect(
       screen.getByTestId(`${testId}-cell-row-1-col-orgCode`),

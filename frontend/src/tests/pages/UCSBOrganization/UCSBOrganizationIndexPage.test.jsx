@@ -87,14 +87,16 @@ describe("UCSBOrganizationIndexPage tests", () => {
         screen.getByTestId(`${testId}-cell-row-0-col-orgCode`),
       ).toHaveTextContent("GG");
     });
-    expect(screen.getByTestId(`${testId}-cell-row-1-col-orgCode`)).toHaveTextContent(
-      "TTG",
-    );
-    expect(screen.getByTestId(`${testId}-cell-row-2-col-orgCode`)).toHaveTextContent(
-      "CIA",
-    );
+    expect(
+      screen.getByTestId(`${testId}-cell-row-1-col-orgCode`),
+    ).toHaveTextContent("TTG");
+    expect(
+      screen.getByTestId(`${testId}-cell-row-2-col-orgCode`),
+    ).toHaveTextContent("CIA");
 
-    const createUCSBOrganizationButton = screen.queryByText("Create UCSB Organization");
+    const createUCSBOrganizationButton = screen.queryByText(
+      "Create UCSB Organization",
+    );
     expect(createUCSBOrganizationButton).not.toBeInTheDocument();
 
     const orgCode = screen.getByText("GG");
@@ -102,7 +104,9 @@ describe("UCSBOrganizationIndexPage tests", () => {
 
     // for non-admin users, details button is visible, but the edit and delete buttons should not be visible
     expect(
-      screen.queryByTestId("UCSBOrganizationTable-cell-row-0-col-Delete-button"),
+      screen.queryByTestId(
+        "UCSBOrganizationTable-cell-row-0-col-Delete-button",
+      ),
     ).not.toBeInTheDocument();
     expect(
       screen.queryByTestId("UCSBOrganizationTable-cell-row-0-col-Edit-button"),
@@ -159,9 +163,9 @@ describe("UCSBOrganizationIndexPage tests", () => {
       ).toBeInTheDocument();
     });
 
-    expect(screen.getByTestId(`${testId}-cell-row-0-col-orgCode`)).toHaveTextContent(
-      "GG",
-    );
+    expect(
+      screen.getByTestId(`${testId}-cell-row-0-col-orgCode`),
+    ).toHaveTextContent("GG");
 
     const deleteButton = await screen.findByTestId(
       `${testId}-cell-row-0-col-Delete-button`,
@@ -171,7 +175,9 @@ describe("UCSBOrganizationIndexPage tests", () => {
     fireEvent.click(deleteButton);
 
     await waitFor(() => {
-      expect(mockToast).toBeCalledWith("UCSB Organization with orgCode GG was deleted");
+      expect(mockToast).toBeCalledWith(
+        "UCSB Organization with orgCode GG was deleted",
+      );
     });
 
     await waitFor(() => {
@@ -179,6 +185,6 @@ describe("UCSBOrganizationIndexPage tests", () => {
     });
     expect(axiosMock.history.delete[0].url).toBe("/api/ucsborganization");
     expect(axiosMock.history.delete[0].url).toBe("/api/ucsborganization");
-    expect(axiosMock.history.delete[0].params).toEqual({ orgCode: "GG"});
+    expect(axiosMock.history.delete[0].params).toEqual({ orgCode: "GG" });
   });
 });
