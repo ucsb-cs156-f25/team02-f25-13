@@ -43,7 +43,6 @@ import { hasRole, useCurrentUser } from "main/utils/useCurrentUser";
 
 import "bootstrap/dist/css/bootstrap.css";
 import "react-toastify/dist/ReactToastify.css";
-import RecommendationRequestIndexPage from "main/pages/RecommendationRequest/RecommendationRequestIndexPage";
 
 function App() {
   const currentUser = useCurrentUser();
@@ -274,4 +273,3 @@ function App() {
 }
 
 export default App;
-
