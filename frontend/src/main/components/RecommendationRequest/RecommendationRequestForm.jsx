@@ -25,6 +25,10 @@ function RecommendationRequstForm({
     /(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+)|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d)|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d)/i;
   // Stryker restore Regex
 
+  // Stryker disable Regex
+  const email_regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/i;
+  // Stryker restore Regex
+
   const testIdPrefix = "RecommendationRequestForm";
 
   return (
@@ -52,6 +56,11 @@ function RecommendationRequstForm({
           isInvalid={Boolean(errors.requesteremail)}
           {...register("requesteremail", {
             required: "Requester Email is required.",
+            pattern: {
+              value: email_regex,
+              message:
+                "Requester email require the format of <email>@<domain>.<extension>",
+            },
           })}
         />
         <Form.Control.Feedback type="invalid">
@@ -68,6 +77,11 @@ function RecommendationRequstForm({
           isInvalid={Boolean(errors.professoremail)}
           {...register("professoremail", {
             required: "Professor Email is required.",
+            pattern: {
+              value: email_regex,
+              message:
+                "Professor email require the format of <email>@<domain>.<extension>",
+            },
           })}
         />
         <Form.Control.Feedback type="invalid">
@@ -100,7 +114,6 @@ function RecommendationRequstForm({
           Date Requested (iso format)
         </Form.Label>
         <Form.Control
-          data-testid={testIdPrefix + "-daterequested"}
           id="daterequested"
           type="datetime-local"
           isInvalid={Boolean(errors.daterequested)}
@@ -117,7 +130,6 @@ function RecommendationRequstForm({
       <Form.Group className="mb-3">
         <Form.Label htmlFor="dateneeded">Date Needed (iso format)</Form.Label>
         <Form.Control
-          data-testid={testIdPrefix + "-dateneeded"}
           id="dateneeded"
           type="datetime-local"
           isInvalid={Boolean(errors.dateneeded)}
@@ -136,15 +148,12 @@ function RecommendationRequstForm({
           type="checkbox"
           id="done"
           label="Done"
-          data-testid={testIdPrefix + "-done"}
           isInvalid={Boolean(errors.done)}
           {...register("done")}
         />
       </Form.Group>
 
-      <Button type="submit" data-testid={testIdPrefix + "-submit"}>
-        {buttonLabel}
-      </Button>
+      <Button type="submit">{buttonLabel}</Button>
       <Button
         variant="Secondary"
         onClick={() => navigate(-1)}

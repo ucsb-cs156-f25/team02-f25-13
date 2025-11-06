@@ -112,4 +112,40 @@ describe("RecommendationRequestForm tests", () => {
       expect(screen.getByText(/Max length 255 characters/)).toBeInTheDocument();
     });
   });
+
+  test("Correct the invaild inputs", async () => {
+    render(
+      <QueryClientProvider client={queryClient}>
+        <Router>
+          <RecommendationRequestForm />
+        </Router>
+      </QueryClientProvider>,
+    );
+
+    const requesterEmailInput = screen.getByTestId(`${testId}-requesteremail`);
+    const professorEmailInput = screen.getByTestId(`${testId}-professoremail`);
+    const submitButton = screen.getByText(/Create/);
+
+    fireEvent.change(requesterEmailInput, {
+      target: { value: "invalidEmail" },
+    });
+    fireEvent.change(professorEmailInput, {
+      target: { value: "invalidEmail" },
+    });
+    fireEvent.click(submitButton);
+
+    await screen.findByText(
+      /Requester email require the format of <email>@<domain>\.<extension>/,
+    );
+    expect(
+      screen.getByText(
+        /Requester email require the format of <email>@<domain>\.<extension>/,
+      ),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        /Professor email require the format of <email>@<domain>.<extension>/,
+      ),
+    ).toBeInTheDocument();
+  });
 });
