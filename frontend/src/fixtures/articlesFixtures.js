@@ -24,7 +24,7 @@ const articlesFixtures = {
       url: "https://dailynexus.com/2025-10-30/ivcsd-implements-i-v-parking-compliance-program",
       explanation:
         "An article about the IVCSD's efforts to address the parking issues in Isla Vista.",
-      email: "ngonzalezornelas@ucsb.edu",
+      email: "example3@ucsb.edu",
       dateAdded: "2025-10-30T11:02:00",
     },
     {
@@ -33,7 +33,7 @@ const articlesFixtures = {
       url: "https://dailynexus.com/2025-10-23/ucsb-forgotten-history-the-storke-tower-rappellers",
       explanation:
         "An article discussing the history of Storke Tower, notably the rappellers of 2008.",
-      email: "ngonzalezornelas@ucsb.edu",
+      email: "exapmple4@ucsb.edu",
       dateAdded: "2025-10-23T09:00:00",
     },
   ],
