@@ -30,43 +30,41 @@ export default function UCSBOrganizationTable({
 
   // Stryker disable next-line all : TODO try to make a good test for this
 
-    // Stryker disable next-line all : TODO try to make a good test for this
-    const deleteCallback = async (cell) => {
-        deleteMutation.mutate(cell);
-    };
+  // Stryker disable next-line all : TODO try to make a good test for this
+  const deleteCallback = async (cell) => {
+    deleteMutation.mutate(cell);
+  };
 
-    const columns = [
-        {
-            header: "Organization Code",
-            accessorKey: "orgCode",
-        },
-        {
-            header: "Organization Translation Short",
-            accessorKey: "orgTranslationShort",
-        },
-        {
-            header: "Organization Translation",
-            accessorKey: "orgTranslation",
-        },
-        {
-            header: "Inactive",
-            accessorKey: "inactive",
-            cell: (info) => (info.getValue() ? "true" : "false"),
-        },
-    ];
-    if (hasRole(currentUser, "ROLE_ADMIN")) {
-        columns.push(ButtonColumn("Edit", "primary", editCallback, testIdPrefix));
-        columns.push(
-            ButtonColumn("Delete", "danger", deleteCallback, testIdPrefix),
-        );
-    }
-    return (
-        <OurTable
-        data={ucsbOrganizations}
-        columns={columns}
-        testid={testIdPrefix}
-        />
+  const columns = [
+    {
+      header: "Organization Code",
+      accessorKey: "orgCode",
+    },
+    {
+      header: "Organization Translation Short",
+      accessorKey: "orgTranslationShort",
+    },
+    {
+      header: "Organization Translation",
+      accessorKey: "orgTranslation",
+    },
+    {
+      header: "Inactive",
+      accessorKey: "inactive",
+      cell: (info) => (info.getValue() ? "true" : "false"),
+    },
+  ];
+  if (hasRole(currentUser, "ROLE_ADMIN")) {
+    columns.push(ButtonColumn("Edit", "primary", editCallback, testIdPrefix));
+    columns.push(
+      ButtonColumn("Delete", "danger", deleteCallback, testIdPrefix),
     );
+  }
+  return (
+    <OurTable
+      data={ucsbOrganizations}
+      columns={columns}
+      testid={testIdPrefix}
+    />
+  );
 }
-
-

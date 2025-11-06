@@ -212,5 +212,14 @@ describe("HelpRequestForm tests", () => {
     const solved = screen.getByTestId(`${testId}-solved`);
     const submit = screen.getByTestId(`${testId}-submit`);
     const cancel = screen.getByTestId(`${testId}-cancel`);
+
+    expect(requesterEmail).toBeInTheDocument();
+    expect(teamId).toBeInTheDocument();
+    expect(tableOrBreakoutRoom).toBeInTheDocument();
+    expect(requestTime).toBeInTheDocument();
+    expect(explanation).toBeInTheDocument();
+    expect(solved).toBeInTheDocument();
+    expect(submit).toBeInTheDocument();
+    expect(cancel).toBeInTheDocument();
   });
 });
