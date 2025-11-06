@@ -64,6 +64,7 @@ function HelpRequestForm({
       <Form.Group className="mb-3">
         <Form.Label htmlFor="teamId">TeamId</Form.Label>
         <Form.Control
+          data-testid={testIdPrefix + "-teamId"}
           id="teamId"
           type="text"
           isInvalid={Boolean(errors.teamId)}
@@ -81,6 +82,7 @@ function HelpRequestForm({
           TableOrBreakoutRoom
         </Form.Label>
         <Form.Control
+          data-testid={testIdPrefix + "-tableOrBreakoutRoom"}
           id="tableOrBreakoutRoom"
           type="text"
           isInvalid={Boolean(errors.tableOrBreakoutRoom)}
@@ -96,6 +98,7 @@ function HelpRequestForm({
       <Form.Group className="mb-3">
         <Form.Label htmlFor="requestTime">RequestTime</Form.Label>
         <Form.Control
+          data-testid={testIdPrefix + "-requestTime"}
           id="requestTime"
           type="datetime-local"
           isInvalid={Boolean(errors.requestTime)}
@@ -112,6 +115,7 @@ function HelpRequestForm({
       <Form.Group className="mb-3">
         <Form.Label htmlFor="explanation">Explanation</Form.Label>
         <Form.Control
+          data-testid={testIdPrefix + "-explanation"}
           id="explanation"
           type="text"
           isInvalid={Boolean(errors.explanation)}
@@ -127,9 +131,9 @@ function HelpRequestForm({
       <Form.Group className="mb-3">
         <Form.Label htmlFor="solved">Solved</Form.Label>
         <Form.Control
+          data-testid={testIdPrefix + "-solved"}
           id="solved"
           type="text"
-          data-testid={testIdPrefix + "-solved"}
           isInvalid={Boolean(errors.solved)}
           {...register("solved", {
             required: "Solved is required.",
