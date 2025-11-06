@@ -187,4 +187,30 @@ describe("HelpRequestForm tests", () => {
       });
     });
   });
+
+  test("uses all field testIds so mutation tests see them", async () => {
+    render(
+      <QueryClientProvider client={queryClient}>
+        <Router>
+          <HelpRequestForm />
+        </Router>
+      </QueryClientProvider>,
+    );
+
+    // Wait for the form to load
+    await screen.findByText(/Create/);
+
+    const requesterEmail = await screen.findByTestId(
+      `${testId}-requesterEmail`,
+    );
+    const teamId = screen.getByTestId(`${testId}-teamId`);
+    const tableOrBreakoutRoom = screen.getByTestId(
+      `${testId}-tableOrBreakoutRoom`,
+    );
+    const requestTime = screen.getByTestId(`${testId}-requestTime`);
+    const explanation = screen.getByTestId(`${testId}-explanation`);
+    const solved = screen.getByTestId(`${testId}-solved`);
+    const submit = screen.getByTestId(`${testId}-submit`);
+    const cancel = screen.getByTestId(`${testId}-cancel`);
+  });
 });
