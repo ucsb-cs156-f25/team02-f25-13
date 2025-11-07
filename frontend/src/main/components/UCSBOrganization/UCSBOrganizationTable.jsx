@@ -29,15 +29,13 @@ export default function UCSBOrganizationTable({
   // Stryker restore all
 
   // Stryker disable next-line all : TODO try to make a good test for this
+
+  // Stryker disable next-line all : TODO try to make a good test for this
   const deleteCallback = async (cell) => {
     deleteMutation.mutate(cell);
   };
 
   const columns = [
-    {
-      header: "id",
-      accessorKey: "id", // accessor is the "key" in the data
-    },
     {
       header: "Organization Code",
       accessorKey: "orgCode",
@@ -62,7 +60,6 @@ export default function UCSBOrganizationTable({
       ButtonColumn("Delete", "danger", deleteCallback, testIdPrefix),
     );
   }
-
   return (
     <OurTable
       data={ucsbOrganizations}

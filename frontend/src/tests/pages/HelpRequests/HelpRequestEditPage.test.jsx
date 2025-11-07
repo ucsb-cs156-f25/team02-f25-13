@@ -93,16 +93,16 @@ describe("HelpRequestEditPage tests", () => {
         tableOrBreakoutRoom: "12",
         requestTime: "2013-06-16T23:55",
         explanation: "Please help!",
-        solved: "true",
+        solved: true,
       });
       axiosMock.onPut("/api/help_requests").reply(200, {
-        id: "17",
+        id: 17,
         requesterEmail: "zhangchi@ucsb.edu",
         teamId: "12",
         tableOrBreakoutRoom: "5",
         requestTime: "2005-06-16T23:55",
         explanation: "Please!",
-        solved: "false",
+        solved: false,
       });
     });
 
@@ -114,6 +114,33 @@ describe("HelpRequestEditPage tests", () => {
     });
 
     const queryClient = new QueryClient();
+
+    test("Shows solved=false when backend returns false", async () => {
+      // Override the default GET stub just for this test
+      axiosMock.onGet("/api/help_requests", { params: { id: 17 } }).reply(200, {
+        id: 17,
+        requesterEmail: "hao_ding@ucsb.edu",
+        teamId: "13",
+        tableOrBreakoutRoom: "12",
+        requestTime: "2013-06-16T23:55",
+        explanation: "Please help!",
+        solved: "false", // 👈 hit the 'false' branch here
+      });
+
+      render(
+        <QueryClientProvider client={queryClient}>
+          <MemoryRouter>
+            <HelpRequestEditPage />
+          </MemoryRouter>
+        </QueryClientProvider>,
+      );
+
+      await screen.findByTestId("HelpRequestForm-solved");
+
+      const solvedField = screen.getByTestId("HelpRequestForm-solved");
+      expect(solvedField).toHaveValue("false"); // 👈 asserts the false side
+    });
+
     test("renders without crashing", async () => {
       render(
         <QueryClientProvider client={queryClient}>
