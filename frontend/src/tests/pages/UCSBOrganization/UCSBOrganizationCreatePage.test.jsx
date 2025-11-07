@@ -86,10 +86,14 @@ describe("UCSBOrganizationCreatePage tests", () => {
     const orgCodeInput = screen.getByLabelText("Organization Code");
     expect(orgCodeInput).toBeInTheDocument();
 
-    const orgTranslationShortInput = screen.getByLabelText("Organization Translation Short");
+    const orgTranslationShortInput = screen.getByLabelText(
+      "Organization Translation Short",
+    );
     expect(orgTranslationShortInput).toBeInTheDocument();
 
-    const orgTranslationInput = screen.getByLabelText("Organization Translation");
+    const orgTranslationInput = screen.getByLabelText(
+      "Organization Translation",
+    );
     expect(orgTranslationInput).toBeInTheDocument();
 
     const inactiveInput = screen.getByLabelText("Inactive");
@@ -117,7 +121,7 @@ describe("UCSBOrganizationCreatePage tests", () => {
       orgTranslationShort: "Org 3",
       orgTranslation: "Organization 3",
       inactive: "true",
-    }); 
+    });
 
     // assert - check that the toast was called with the expected message
     expect(mockToast).toBeCalledWith(
