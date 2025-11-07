@@ -5,18 +5,19 @@ import { useBackendMutation } from "main/utils/useBackend";
 import {
   cellToAxiosParamsDelete,
   onDeleteSuccess,
-} from "main/utils/UCSBOrganizationUtils";
+} from "main/utils/recommendationRequestUtils";
 import { useNavigate } from "react-router";
 import { hasRole } from "main/utils/useCurrentUser";
-export default function UCSBOrganizationTable({
-  ucsbOrganizations,
+
+export default function RecommendationRequestTable({
+  recommendationRequests,
   currentUser,
-  testIdPrefix = "UCSBOrganizationTable",
+  testIdPrefix = "RecommendationRequestTable",
 }) {
   const navigate = useNavigate();
 
   const editCallback = (cell) => {
-    navigate(`/ucsborganization/edit/${cell.row.original.orgCode}`);
+    navigate(`/recommendationrequest/edit/${cell.row.original.id}`);
   };
 
   // Stryker disable all : hard to test for query caching
@@ -24,11 +25,9 @@ export default function UCSBOrganizationTable({
   const deleteMutation = useBackendMutation(
     cellToAxiosParamsDelete,
     { onSuccess: onDeleteSuccess },
-    ["/api/ucsborganization/all"],
+    ["/api/recommendationrequest/all"],
   );
   // Stryker restore all
-
-  // Stryker disable next-line all : TODO try to make a good test for this
 
   // Stryker disable next-line all : TODO try to make a good test for this
   const deleteCallback = async (cell) => {
@@ -37,32 +36,46 @@ export default function UCSBOrganizationTable({
 
   const columns = [
     {
-      header: "Organization Code",
-      accessorKey: "orgCode",
+      header: "id",
+      accessorKey: "id", // accessor is the "key" in the data
+    },
+
+    {
+      header: "Requester Email",
+      accessorKey: "requesteremail",
     },
     {
-      header: "Organization Translation Short",
-      accessorKey: "orgTranslationShort",
+      header: "Professor Email",
+      accessorKey: "professoremail",
     },
     {
-      header: "Organization Translation",
-      accessorKey: "orgTranslation",
+      header: "Explanation",
+      accessorKey: "explanation",
     },
     {
-      header: "Inactive",
-      accessorKey: "inactive",
-      cell: (info) => (info.getValue() ? "true" : "false"),
+      header: "Date Requested (in ISO)",
+      accessorKey: "daterequested",
+    },
+    {
+      header: "Date Needed (in ISO)",
+      accessorKey: "dateneeded",
+    },
+    {
+      header: "Done",
+      accessorKey: "done",
     },
   ];
+
   if (hasRole(currentUser, "ROLE_ADMIN")) {
     columns.push(ButtonColumn("Edit", "primary", editCallback, testIdPrefix));
     columns.push(
       ButtonColumn("Delete", "danger", deleteCallback, testIdPrefix),
     );
   }
+
   return (
     <OurTable
-      data={ucsbOrganizations}
+      data={recommendationRequests}
       columns={columns}
       testid={testIdPrefix}
     />
