@@ -124,7 +124,7 @@ describe("RecommendationRequestForm tests", () => {
 
     const requesterEmailInput = screen.getByTestId(`${testId}-requesteremail`);
     const professorEmailInput = screen.getByTestId(`${testId}-professoremail`);
-    const submitButton = screen.getByText(/Create/);
+    const submitButton = screen.getByTestId("RecommendationRequestForm-submit");
 
     fireEvent.change(requesterEmailInput, {
       target: { value: "invalidEmail" },
