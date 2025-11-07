@@ -113,7 +113,7 @@ describe("RecommendationRequestIndexPage tests", () => {
     const daterequested = screen.getByText("2022-04-20T00:00:00");
     expect(daterequested).toBeInTheDocument();
 
-    const dateneeded = screen.getByText("2022-05-01T23:59:59");
+    const dateneeded = screen.getByText("2022-05-01T23:59:00");
     expect(dateneeded).toBeInTheDocument();
 
     const done = screen.getAllByText("false");
