@@ -11,7 +11,6 @@ import RestaurantIndexPage from "main/pages/Restaurants/RestaurantIndexPage";
 import RestaurantCreatePage from "main/pages/Restaurants/RestaurantCreatePage";
 import RestaurantEditPage from "main/pages/Restaurants/RestaurantEditPage";
 
-<<<<<<< HEAD
 import ArticlesIndexPage from "main/pages/Articles/ArticlesIndexPage";
 import ArticlesCreatePage from "main/pages/Articles/ArticlesCreatePage";
 import ArticlesEditPage from "main/pages/Articles/ArticlesEditPage";
@@ -27,11 +26,10 @@ import HelpRequestEditPage from "main/pages/HelpRequests/HelpRequestEditPage";
 import UCSBDiningCommonsMenuItemIndexPage from "main/pages/UCSBDiningCommonsMenuItem/UCSBDiningCommonsMenuItemIndexPage";
 import UCSBDiningCommonsMenuItemCreatePage from "main/pages/UCSBDiningCommonsMenuItem/UCSBDiningCommonsMenuItemCreatePage";
 import UCSBDiningCommonsMenuItemEditPage from "main/pages/UCSBDiningCommonsMenuItem/UCSBDiningCommonsMenuItemEditPage";
-=======
+
 import RecommendationRequestIndexPage from "main/pages/RecommendationRequest/RecommendationRequestIndexPage";
 import RecommendationRequestCreatePage from "main/pages/RecommendationRequest/RecommendationRequestCreatePage";
 import RecommendationRequestEditPage from "main/pages/RecommendationRequest/RecommendationRequestEditPage";
->>>>>>> 08a7a8dd (yy - add tests for recRequst placeholder pages for index, create, edit also add test for utils)
 
 import PlaceholderIndexPage from "main/pages/Placeholder/PlaceholderIndexPage";
 import PlaceholderCreatePage from "main/pages/Placeholder/PlaceholderCreatePage";
@@ -79,13 +77,8 @@ function App() {
         <>
           <Route
             exact
-<<<<<<< HEAD
             path="/MenuItemReview"
             element={<MenuItemReviewIndexPage />}
-=======
-            path="/recommendationrequest"
-            element={<RecommendationRequestIndexPage />}
->>>>>>> 08a7a8dd (yy - add tests for recRequst placeholder pages for index, create, edit also add test for utils)
           />
         </>
       )}
@@ -93,7 +86,6 @@ function App() {
         <>
           <Route
             exact
-<<<<<<< HEAD
             path="/MenuItemReview/edit/:id"
             element={<MenuItemReviewEditPage />}
           />
@@ -101,15 +93,6 @@ function App() {
             exact
             path="/MenuItemReview/create"
             element={<MenuItemReviewCreatePage />}
-=======
-            path="/recommendationrequest/edit/:id"
-            element={<RecommendationRequestEditPage />}
-          />
-          <Route
-            exact
-            path="/recommendationrequest/create"
-            element={<RecommendationRequestCreatePage />}
->>>>>>> 08a7a8dd (yy - add tests for recRequst placeholder pages for index, create, edit also add test for utils)
           />
         </>
       )}
@@ -259,6 +242,48 @@ function App() {
             exact
             path="/ucsborganization/create"
             element={<UCSBOrganizationCreatePage />}
+          />
+        </>
+      )}
+      {hasRole(currentUser, "ROLE_USER") && (
+        <>
+          <Route
+            exact
+            path="/recommendationrequest"
+            element={<RecommendationRequestIndexPage />}
+          />
+        </>
+      )}
+      {hasRole(currentUser, "ROLE_ADMIN") && (
+        <>
+          <Route
+            exact
+            path="/recommendationrequest/edit/:id"
+            element={<RecommendationRequestEditPage />}
+          />
+          <Route
+            exact
+            path="/recommendationrequest/create"
+            element={<RecommendationRequestCreatePage />}
+          />
+        </>
+      )}
+      {hasRole(currentUser, "ROLE_USER") && (
+        <>
+          <Route exact path="/placeholder" element={<PlaceholderIndexPage />} />
+        </>
+      )}
+      {hasRole(currentUser, "ROLE_ADMIN") && (
+        <>
+          <Route
+            exact
+            path="/placeholder/edit/:id"
+            element={<PlaceholderEditPage />}
+          />
+          <Route
+            exact
+            path="/placeholder/create"
+            element={<PlaceholderCreatePage />}
           />
         </>
       )}
