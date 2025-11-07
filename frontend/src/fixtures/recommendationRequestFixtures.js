@@ -5,7 +5,7 @@ const recommendationRequestFixtures = {
     professoremail: "phtcon@ucsb.edu",
     explanation: "BS/MS program",
     daterequested: "2022-04-20T00:00:00",
-    dateneeded: "2022-05-01T23:59:59",
+    dateneeded: "2022-05-01T23:59:00",
     done: false,
   },
   threeRecommendationRequests: [
@@ -15,7 +15,7 @@ const recommendationRequestFixtures = {
       professoremail: "phtcon@ucsb.edu",
       explanation: "BS/MS program",
       daterequested: "2022-04-20T00:00:00",
-      dateneeded: "2022-05-01T23:59:59",
+      dateneeded: "2022-05-01T23:59:00",
       done: false,
     },
     {
@@ -24,7 +24,7 @@ const recommendationRequestFixtures = {
       professoremail: "richert@ucsb.edu",
       explanation: "PhD CS Stanford",
       daterequested: "2022-05-20T00:00:00",
-      dateneeded: "2022-11-15T23:59:59",
+      dateneeded: "2022-11-15T23:59:00",
       done: false,
     },
     {
@@ -33,7 +33,7 @@ const recommendationRequestFixtures = {
       professoremail: "phtcon@ucsb.edu",
       explanation: "PhD CS Stanford",
       daterequested: "2022-05-20T00:00:00",
-      dateneeded: "2022-11-15T23:59:59",
+      dateneeded: "2022-11-15T23:59:00",
       done: false,
     },
   ],

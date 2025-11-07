@@ -46,7 +46,9 @@ describe("RecommendationRequestEditPage tests", () => {
       axiosMock
         .onGet("/api/systemInfo")
         .reply(200, systemInfoFixtures.showingNeither);
-      axiosMock.onGet("/api/recommendationrequest", { params: { id: 17 } }).timeout();
+      axiosMock
+        .onGet("/api/recommendationrequest", { params: { id: 17 } })
+        .timeout();
     });
 
     afterEach(() => {
@@ -68,7 +70,9 @@ describe("RecommendationRequestEditPage tests", () => {
         </QueryClientProvider>,
       );
       await screen.findByText("Edit Recommendation Request");
-      expect(screen.queryByTestId("RecommendationRequest-requesteremail")).not.toBeInTheDocument();
+      expect(
+        screen.queryByTestId("RecommendationRequest-requesteremail"),
+      ).not.toBeInTheDocument();
       restoreConsole();
     });
   });
@@ -84,22 +88,24 @@ describe("RecommendationRequestEditPage tests", () => {
       axiosMock
         .onGet("/api/systemInfo")
         .reply(200, systemInfoFixtures.showingNeither);
-      axiosMock.onGet("/api/recommendationrequest", { params: { id: 17 } }).reply(200, {
-        id: 17,
-        requesteremail: "cgaucho@ucsb.edu",
-        professoremail: "phtcon@ucsb.edu",
-        explanation: "BS/MS program",
-        daterequested: "2022-04-20T01:00",
-        dateneeded: "2022-05-01T23:59",
-        done: true,
-      });
+      axiosMock
+        .onGet("/api/recommendationrequest", { params: { id: 17 } })
+        .reply(200, {
+          id: 17,
+          requesteremail: "cgaucho@ucsb.edu",
+          professoremail: "phtcon@ucsb.edu",
+          explanation: "BS/MS program",
+          daterequested: "2022-04-20T01:00:00",
+          dateneeded: "2022-05-01T23:59:00",
+          done: true,
+        });
       axiosMock.onPut("/api/recommendationrequest").reply(200, {
         id: "17",
         requesteremail: "232cgaucho@ucsb.edu",
         professoremail: "267phtcon@ucsb.edu",
         explanation: "test program",
-        daterequested: "2023-04-20T01:00",
-        dateneeded: "2023-05-01T23:59",
+        daterequested: "2023-04-20T01:00:00",
+        dateneeded: "2023-05-01T23:59:00",
         done: false,
       });
     });
@@ -128,7 +134,9 @@ describe("RecommendationRequestEditPage tests", () => {
       const requesteremailField = screen.getByLabelText("Requester Email");
       const professoremailField = screen.getByLabelText("Professor Email");
       const explanationField = screen.getByLabelText("Explanation");
-      const daterequestedField = screen.getByLabelText("Date Requested (iso format)");
+      const daterequestedField = screen.getByLabelText(
+        "Date Requested (iso format)",
+      );
       const dateneededField = screen.getByLabelText("Date Needed (iso format)");
       const doneField = screen.getByLabelText("Done");
 
@@ -182,7 +190,9 @@ describe("RecommendationRequestEditPage tests", () => {
         "Recommendation Request Updated - id: 17 Requester email: 232cgaucho@ucsb.edu",
       );
 
-      expect(mockNavigate).toHaveBeenCalledWith({ to: "/recommendationrequest" });
+      expect(mockNavigate).toHaveBeenCalledWith({
+        to: "/recommendationrequest",
+      });
 
       expect(axiosMock.history.put.length).toBe(1); // times called
       expect(axiosMock.history.put[0].params).toEqual({ id: 17 });
@@ -196,7 +206,9 @@ describe("RecommendationRequestEditPage tests", () => {
           done: true,
         }),
       ); // posted object
-      expect(mockNavigate).toHaveBeenCalledWith({ to: "/recommendationrequest" });
+      expect(mockNavigate).toHaveBeenCalledWith({
+        to: "/recommendationrequest",
+      });
     });
   });
 });
